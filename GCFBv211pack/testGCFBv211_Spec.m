@@ -2,29 +2,8 @@
 %      Test GCFBv211 spectrogram (for GCFBpack)
 %      Toshio IRINO
 %      Created:    5 Dec 2018   from testGCFBv211.m
-%      Modified:    5 Dec 2018  (v211)
-%
-%
-clear
-close all
-
-%%%% Stimuli : a simple pulse train %%%%
-fs = 48000;
-SigSPLlist = 60;
-%
-%      Test GCFBv211 (for GCFBpack)
-%      Toshio IRINO
-%      Created:   15 Sep 2005 (for v205)
-%      Modified:   7 Apr 2006 (v206, Compensation of Group delay OutMidCrct)
-%      Modified:  23 Dec 2006 (v207, 'dynamic' rather than 'time-varying')
-%      Modified:  18 Mar 2007 (check. modifying title)
-%      Modified:  25 Jul 2007 (GCresp)
-%      Modified:   5 Aug 2007 (Elapsed time)
-%      Modified:  26 Jun 2013
-%      Modified:  25 Nov 2013 (v209)
-%      Modified:  18 Apr 2015 (v210, include GCresp in GCFBv210_SetParam )
-%      Modified:  13 May 2015 (v210, debug & comparison)
-%      Modified:    5 Dec 2018  (v211,  No software modification in the main. remove 209.)
+%      Modified:   5 Dec 2018  (v211)
+%      Modified:   9 Dec 2018  (using CalSmoothSpec.m)
 %
 %
 clear
@@ -66,24 +45,17 @@ for SwDySt = [2 1]
             num2str(tm/Tsnd,4) ' times RealTime.']);
         disp(' ');
         
-        %% Auditory Spectrogram
-        [NumCh, LenGCout] = size(cGCout);
-        cGCrect = max(cGCout,0); % rectified version
-        LenFrame = 0.020*fs;  % 20 ms
-        LenFrameShift = 0.010*fs; % 10 ms
-        WinFunc = hamming(LenFrame);
-        for nch = 1:NumCh
-            FrameMtrx = SetFrame4TimeSequence(cGCrect(nch,:),LenFrame,LenFrameShift);
-            AudSpec(nch,:) = WinFunc(:)'*FrameMtrx;
-        end;
+        %%
+        GCFBparam.fs  = fs; % using default. See inside CalSmoothSpec.m for parameters
+        [AudSpec GCFBparam] = CalSmoothSpec(max(cGCout,0),GCFBparam);
         
         subplot(length(SigSPLlist),1,SwSPL);
         MaxAudSpec(SwDySt, SwSPL) = max(max(AudSpec));
         disp(MaxAudSpec)
         if SwDySt  == 1
-            AmpImg = (64*1.2)/2.60e4;  % normalized by max value
+            AmpImg = (64*1.2)/49;  % normalized by max value. It is a data specific value. Please change it.
         else
-            AmpImg = (64*1.2)/8.38e4;
+            AmpImg = (64*1.2)/166;
         end;
         image(AmpImg*AudSpec)
         %  imagesc(AudSpec);
@@ -94,3 +66,23 @@ for SwDySt = [2 1]
         drawnow
     end;
 end;
+
+
+
+%% %%%%%%%%%%%%%%%%%%%%%
+% Trash %%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%
+	% without using %CalSmoothSpec
+	%        
+	%% Auditory Spectrogram
+        % [NumCh, LenGCout] = size(cGCout);
+        % cGCrect = max(cGCout,0); % rectified version
+        % LenFrame = 0.020*fs;  % 20 ms
+        % LenFrameShift = 0.010*fs; % 10 ms
+        % WinFunc = hamming(LenFrame);
+        % for nch = 1:NumCh
+        %     FrameMtrx = SetFrame4TimeSequence(cGCrect(nch,:),LenFrame,LenFrameShift);
+        %     AudSpec(nch,:) = WinFunc(:)'*FrameMtrx;
+        % end;
+        
+        
