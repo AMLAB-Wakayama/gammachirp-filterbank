@@ -41,7 +41,8 @@
 %       Modified:    5 Dec 2018  (v211,  Just modify the version number without any software modification in the main. )
 %       Modified:    6 May 2020  (for checking processing speed, tic/toc comments)
 %       Modified:  16 May 2020  (v220, introduction of frame-base processing)
-%       Modified:  23 May 2020  (v221, modified )
+%       Modified:  23 May 2020  (v221, some debug )
+%       Modified:  23 May 2020  (v221, modified a comment )
 %
 %
 % function [cGCout, pGCout, GCparam, GCresp] = GCFB2xx(Snd,GCparam)
@@ -183,7 +184,7 @@ if strncmp(GCparam.Ctrl,'dyn',3) == 1  % Dynamic
     if strncmp(GCparam.DynHPAF.StrPrc,'sample',5) == 1,
         GCFBv221_SmplBySmpl           % Sample-by-sample processing  of HP-AF
     elseif strncmp(GCparam.DynHPAF.StrPrc,'frame',5) == 1,
-        GCFBv221_FrameBase             %  Frame base processing  of HP-AF
+        GCFBv221_FrameBase             %  Frame-based processing  of HP-AF
     else
         error('Not prepared');
     end;

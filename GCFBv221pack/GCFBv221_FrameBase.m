@@ -1,11 +1,12 @@
 %
-%       Frame base processing of HP-AF of dcGCFB
+%       Frame-based processing of HP-AF of dcGCFB
 %       Toshio IRINO
 %       Created:   13 May 2020 (Extracted from GCFBv211.m)
 %       Modified:   13 May 2020 (Extracted from GCFBv211.m)
 %       Modified:  14 May 2020  (for checking processing speed)
 %       Modified:  16 May 2020  (v220, introduction of frame-base processing)
-%       Modified:  24 May 2020  (introduction of cGCfxFrame narrow filter)
+%       Modified:  24 May 2020  (v221, introduction of cGCfxFrame narrow filter)
+%       Modified:  26 Jul   2020  (modified some comments)
 %
 %       See  main  GCFB2xx
 %
@@ -85,7 +86,7 @@ for nch = 1:NumCh
     cGCframe(nch,1:NumFrame) = AsymFuncGain(nch,:).*cGCfxFrame(nch,:); % using  fixed cGC filter output. narrower BW
     
     if nch == 1 | rem(nch,20)==0
-        disp(['Frame base HP-AF: ch #' num2str(nch) ' / #' num2str(NumCh) ...
+        disp(['Frame-based HP-AF: ch #' num2str(nch) ' / #' num2str(NumCh) ...
             '.    elapsed time = ' num2str(fix(etime(clock,Tstart)*10)/10) ' (sec)']);
     end;
     
