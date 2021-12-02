@@ -46,7 +46,7 @@ GCFBv231.m : main body
 	% input level control
 	Eqlz2MeddisHCLevel
 	% default settings for hearing loss conditions
-	GCparam.OutMidCrct = 'FreeField'; % Sound source selection
+	GCparam.OutMidCrct = 'FreeField'; % Sound source/position selection
 	GCparam.Ctrl = 'dynamic';  
 	GCparam.DynHPAF.StrPrc = 'frame-base'; 
 	% Hearing loss setting
@@ -56,11 +56,10 @@ GCFBv231.m : main body
         GCparam.HLoss.Type = 'HL1' ~ 'HL8' % various types of example hearing loss
 	 	See GCFBv231_HearingLoss.m (lines 200-240) for detail
 		
-			
-       
-GCFBv231_EnvModLoss.m :  Envelop modulation (TMTF) loss calculation
+			      
+GCFBv231_EnvModLoss.m :  Envelop modulation (TMTF) loss calculation (beta version)
 	
-GCFBv231_AnaEnvMod.m :  Modulation filterbank calculation
+GCFBv231_AnaEnvMod.m :  Modulation filterbank calculation (beta version)
 	
 ShowIOfunction_ExctPtn_GCFBv231.m :  Show Input-output function based on excitation pattern
 
