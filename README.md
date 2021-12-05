@@ -28,7 +28,7 @@ Packages:
  			It works with frame-based processing.  
 	       	( "Sample-by-sample" processing is not changed much from v211.)  
 			This version is essential for hearing impairment simulator, WHISv300.  
-			
+
 --- 
   
 Ref:  
@@ -36,40 +36,40 @@ Ref:
 [2] Toshio Irino, "A new implementation of hearing impairment simulator WHIS based on the gammachirp auditory filterbank," Report of ASJ hearing commitee meeting, 11 Dec 2021 (Main text in Japanese, with English extended abstract)  
 --> English document is under preparation.  
 
+---
 
+About programs  (GCFBv231 and probably applicable for the latest version)  
+  
+testGCFBv231.m :   test / example program. Execute this program first.  
+  
+StartupGCFB.m :  Path setting. Execute this if necessary.  
+  
+GCFBv231.m : main body  
+	% input level control  
+	Eqlz2MeddisHCLevel  
+	% default settings for hearing loss conditions  
+	GCparam.OutMidCrct = 'FreeField'; % Sound source/position selection  
+	GCparam.Ctrl = 'dynamic';    
+	GCparam.DynHPAF.StrPrc = 'frame-base';   
+	% Hearing loss setting  
+	GCparam.HLoss.Type = 'NH';   % normal hearing  
+    GCparam.HLoss.Type = 'HL0'; % manual setting  
+	       Example of setting:  GCparam.HLoss.HearingLeveldB = [ 5  5  6  7 12 28 39] +5;  % HL4+5dB   
+    GCparam.HLoss.Type = 'HL1' ~ 'HL8' % various types of example hearing loss   
+	See GCFBv231_HearingLoss.m (lines 200-240) for detail   
+   
+GCFBv231_EnvModLoss.m :  Envelop modulation (TMTF) loss calculation (beta version)  
+	 
+GCFBv231_AnaEnvMod.m :  Modulation filterbank calculation (beta version)  
+	  
+ShowIOfunction_ExctPtn_GCFBv231.m :  Show Input-output function based on excitation pattern  
+  
+ShowIOfunction_AsymFunc_GCFBv231.m :  Show Input-output function by Asymmetric Function   
+  
+There are some other programs to show the characteristics of GCFB.   
+  
+Directories   
+	Fig/ :  Some figures derived from the sample programs and related documents  
+	Tools/ :  Tools for GCFB  (execute StartupGCFB.m to setpath)  
 
------------ Programs  (GCFBv231 and probably applicable for the latest version) ----------
-
-testGCFBv231.m :   test / example program. Execute this program first.
-
-StartupGCFB.m :  Path setting. Execute this if necessary.
-
-GCFBv231.m : main body
-	% input level control
-	Eqlz2MeddisHCLevel
-	% default settings for hearing loss conditions
-	GCparam.OutMidCrct = 'FreeField'; % Sound source/position selection
-	GCparam.Ctrl = 'dynamic';  
-	GCparam.DynHPAF.StrPrc = 'frame-base'; 
-	% Hearing loss setting
-	GCparam.HLoss.Type = 'NH';   % normal hearing
-        GCparam.HLoss.Type = 'HL0'; % manual setting
-	       Example of setting:  GCparam.HLoss.HearingLeveldB = [ 5  5  6  7 12 28 39] +5;  % HL4+5dB
-        GCparam.HLoss.Type = 'HL1' ~ 'HL8' % various types of example hearing loss
-	 	See GCFBv231_HearingLoss.m (lines 200-240) for detail
-		
-			      
-GCFBv231_EnvModLoss.m :  Envelop modulation (TMTF) loss calculation (beta version)
-	
-GCFBv231_AnaEnvMod.m :  Modulation filterbank calculation (beta version)
-	
-ShowIOfunction_ExctPtn_GCFBv231.m :  Show Input-output function based on excitation pattern
-
-ShowIOfunction_AsymFunc_GCFBv231.m :  Show Input-output function by Asymmetric Function 
-
-There are some other programs to show the characteristics of GCFB. 
-
-Directories 
-	Fig/ :  Some figures derived from the sample programs and related documents
-	Tools/ :  Tools for GCFB  (execute StartupGCFB.m to setpath)
-
+  
