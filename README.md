@@ -43,14 +43,15 @@ Programs  (GCFBv231 and probably applicable for the latest version):
 - testGCFBv231.m :   test / example program. Execute this program first.  
   
 - StartupGCFB.m :  Path setting. Execute this if necessary.  
-  
+
+- Eqlz2MeddisHCLevel.m  : input level control for simplicity. You may specify SPL more strictly.
+
 - GCFBv231.m : main body  
-	- Default
-	  - Eqlz2MeddisHCLevel  : input level control  
+	- Important parameters (default)
 	  - GCparam.OutMidCrct = 'FreeField'; % Sound source/position selection  
 	  - GCparam.Ctrl = 'dynamic';    
-	  - GCparam.DynHPAF.StrPrc = 'frame-base';   
-	- Hearing loss (HL) setting  
+	  - GCparam.DynHPAF.StrPrc = 'frame-base';  
+	- Hearing loss (HL) parameters  
 	  - GCparam.HLoss.Type = 'NH';   % normal hearing  
       - GCparam.HLoss.Type = 'HL0'; % manual setting  
 	       Example of setting:  GCparam.HLoss.HearingLeveldB = [ 5  5  6  7 12 28 39] +5;  % HL4+5dB   
