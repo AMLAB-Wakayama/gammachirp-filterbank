@@ -44,10 +44,10 @@ Programs  (GCFBv231 and probably applicable for the latest version):
   
 - StartupGCFB.m :  Path setting. Execute this if necessary.  
 
-- Eqlz2MeddisHCLevel.m  : input level control for simplicity. You may specify SPL more strictly.
 
 - GCFBv231.m : main body  
-	- Important parameters (default)
+	- Important functions and parameters (default)
+	  - Eqlz2MeddisHCLevel.m  : input level control for simplicity. You may specify SPL more strictly.
 	  - GCparam.OutMidCrct = 'FreeField'; % Sound source/position selection  
 	  - GCparam.Ctrl = 'dynamic';    
 	  - GCparam.DynHPAF.StrPrc = 'frame-base';  
