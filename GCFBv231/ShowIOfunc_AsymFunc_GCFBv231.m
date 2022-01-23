@@ -14,7 +14,7 @@
 %
 clear
 clf
-DirProg = fileparts(which(mfilename)); % ‚±‚ÌƒvƒƒOƒ‰ƒ€‚ª‚ ‚é‚Æ‚±‚ë
+DirProg = fileparts(which(mfilename)); % Location of this program
 DirFig = [DirProg '/Fig/'];
 
 fs   = 48000;
