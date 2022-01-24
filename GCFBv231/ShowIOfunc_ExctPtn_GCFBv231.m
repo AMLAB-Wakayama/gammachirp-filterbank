@@ -1,4 +1,3 @@
-
 %
 %       Plot GCFBv231
 %       IRINO T.
@@ -7,6 +6,8 @@
 %       Modified:  16 Aug 2021 (プログラム確認。OK。)
 %       Modified:  29 Aug 2021  v231
 %       Modified:  11 Oct 2021  v231
+%       Modified:  31 Dec 2021  modified subplot 
+%
 %
 %
 clear
@@ -30,7 +31,7 @@ GCparam.OutMidCrct = 'No';  %cochlear inputを見るときは、ELCをいれないこと。
 
 StrOMC = '';
 StrXlabel = 'Cochlea input (dB)';
-if strcmp(upper(GCparam.OutMidCrct),'NO') == 0,
+if strcmp(upper(GCparam.OutMidCrct),'NO') == 0
     StrOMC = ['_' GCparam.OutMidCrct];
     StrXlabel = [GCparam.OutMidCrct ' level (dB)'];
 end
@@ -39,8 +40,10 @@ GCparam.Ctrl = 'dynamic'; % used to be 'time-varying'
 GCparam.DynHPAF.StrPrc = 'frame-base';
 
 Param.fcList = [125 250 500 1000 2000 4000 8000];
-nTargetfcList = 1:length(Param.fcList);
+ nTargetfcList = 1:length(Param.fcList);
+%nTargetfcList = 2:length(Param.fcList);  % 250 ~ 8000 Hz for paper
 % nTargetfcList = [6 7]; 
+
 Param.SPLdBlist = [-10:10:100];
 %Param.SPLdBlist = [-20:20:100];
 % Param.SPLdBlist = [-40:20:100]; %%% <--- 
@@ -54,8 +57,12 @@ zz = zeros(1,0.050*fs);  % 50 ms silence
 ColorList1 = colororder('default');
 % ColorList = ColorList1([1 5 4 2],:);
 % StrLineList = {'-','--','-.','-.'};
-ColorList = ColorList1([5 3 1 2],:);
-StrLineList = {'-','--','-','-.'};
+% ColorList = ColorList1([5 3 1 2],:);
+% StrLineList = {'-','--','-','-.'};
+ColorList = ColorList1([1 5 4 3 ],:);
+StrLineList = {'-','--','-.','--'};
+
+
 
 for nType = 1:length(Param.TypeList)
     GCparam.HLoss.Type = char(Param.TypeList(nType));
@@ -112,7 +119,11 @@ for nType = 1:length(Param.TypeList)
             end
             
             figure(2);
-            subplot(4,2,nfc);
+            if length(nTargetfcList) >= 7
+                subplot(4,2,nfc);
+            else
+                subplot(2,3,nfc-min(nTargetfcList)+1);
+            end
             if strcmp(GCparam.HLoss.Type,'NH') == 1
                 n100dB = find(Param.SPLdBlist==100);
                 plot([0 100], MaxGCframedB(n100dB) - [100 0],'k:' ,[-10 110],[0 0],'k-')
@@ -128,7 +139,7 @@ for nType = 1:length(Param.TypeList)
             % NG plot(Param.SPLdBlist,MaxGCframedB, StrLine, [0 100], [0 100]-50,'k:',[-10 110],[0 0],'k-')            
             axis([-5 105 -20 60]);
             %axis([-45 105 -100 60]);  %%% <--- 
-            set(gca,'XTick', [0:10:100]);
+            set(gca,'XTick', [0:20:100]);
             set(gca,'YTick', [-100:10:100]);
             % grid on;
             hold on;
@@ -141,7 +152,7 @@ for nType = 1:length(Param.TypeList)
             Rslt.AbsThrVal(nType,nfc,nCmprsHlth) = interp1(MaxGCframedB,Param.SPLdBlist,0);
             
             Rslt.HLxCch(nfc) = Rslt.HL0Cch(nfc) + GCparamOut.HLoss.HearingLeveldB(nfc);
-            Rslt.DiffHLx(nType,nfc,nCmprsHlth) = Rslt.HLxCch(nfc) - Rslt.AbsThrVal(nType,nfc,nCmprsHlth);
+            Rslt.DiffHLx(nType,nfc,nCmprsHlth) = Rslt.AbsThrVal(nType,nfc,nCmprsHlth) - Rslt.HLxCch(nfc);
 
             if CmprsHlth == 1  % 書くのは最初の一回で十分
                 if  mean(Rslt.HL0Cch(nfc)-Rslt.HLxCch(nfc)) ~= 0  % 同じ時は書く必要なし == HL0と同じ値
@@ -149,6 +160,9 @@ for nType = 1:length(Param.TypeList)
                     plot(Rslt.HLxCch(nfc)*[1 1], [-5 19], 'k:');
                     %                    text(Rslt.HLxCch(nfc),21,['HLx@C='  num2str(Rslt.HLxCch(nfc))],'Rotation',90);
                     text(Rslt.HLxCch(nfc),21,['HL ' int2str(GCparamOut.HLoss.HearingLeveldB(nfc)) ' dB'],'Rotation',90);
+                else
+                    text(60,55, [int2str(fc) ' Hz']);
+                    % text(50,55, [int2str(fc) ' Hz'],'HorizontalAlignment','center');
                 end
             end
         end
@@ -158,11 +172,18 @@ for nType = 1:length(Param.TypeList)
     % [Rslt.DiffHLx(nfc,nCmprsHlth); GCparamOut.HLoss.HLval_PinCochleadB; GCparamOut.HLoss.AFgainCmpnstdB ]
     
     Rslt.Param = Param;
-    printi(3,0,[2,2,25,40]);
     NameFig = [DirFig 'Fig_IOfunc_ExctPtn_' GCparamOut.HLoss.Type StrOMC];
-    print(NameFig,'-depsc','-tiff');
     save(NameFig,'Rslt');
     
 end
+
+%% plot all
+if length(nTargetfcList) >= 7
+    printi(3,0,[2,2,25,40]);
+else
+    printi(3,0,[2,2,25,14]);
+    try ReSubPlot(2,3,0); end  % for paper
+end
+print(NameFig,'-depsc','-tiff');
 
 
