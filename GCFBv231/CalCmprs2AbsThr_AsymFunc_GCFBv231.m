@@ -1,18 +1,19 @@
 %
 %       test AsymFuncInOut
 %       Toshio IRINO
-%       Created:  14 Aug 2021 from GCFBv230
+%       Created:   14 Aug 2021 from GCFBv230
 %       Modified:  14 Aug 2021
 %       Modified:  15 Aug 2021 ーーー    GCFBv230_framebaseはACFではなくexp(c thetha)を直接使っている。
 %       Modified:  17 Aug 2021 using Fr1query -- NOT Fp1
 %       Modified:  28 Aug 2021 v231
 %       Modified:  12 Oct  2021 v231
+%       Modified:  27 Jan 2022  v231 minor change StartupGCFB;
 %
 %
 %
 clear
 clf
-StartupGCFB
+StartupGCFB;
 DirProg = fileparts(which(mfilename)); % このプログラムがあるところ
 DirFig = [DirProg '/Fig/'];
 

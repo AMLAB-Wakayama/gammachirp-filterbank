@@ -1,12 +1,13 @@
 %
 %       Set Tools of GCFB for standalone processing
 %       IRINO T.
-%       Created: 11 Sep 2021
-%       Modified: 11 Sep 2021
-%       Modified: 19 Sep 2021
-%       Modified: 30 Sep 2021
-%       Modified:   9 Oct 2021
-%       Modified: 24 Oct 2021
+%       Created:   11 Sep 2021
+%       Modified:  11 Sep 2021
+%       Modified:  19 Sep 2021
+%       Modified:  30 Sep 2021
+%       Modified:    9 Oct 2021
+%       Modified:  24 Oct 2021
+%       Modified:  27 Jan 2022  introducing EqlzGCFB2Rms1at0dB;
 %
 %
 DirProg = fileparts(which(mfilename));
@@ -22,7 +23,7 @@ DirSource1 = [DirMAT 'Auditory/GCTool/'];
 NameFile1     ={'ACFilterBank.m', 'AsymCmpFrspV2.m', 'CmprsGCFrsp.m' ...
     'Fpeak2Fr.m', 'Fr2Fpeak.m', 'Fr1toFp2.m', 'Fp2toFr1.m', ...
     'GammaChirp.m', 'GammaChirpFrsp.m', 'MakeAsymCmpFiltersV2.m', ...
-    'MkCalibTone4AFB.m', 'Eqlz2MeddisHCLevel.m', ...
+    'MkCalibTone4AFB.m', 'Eqlz2MeddisHCLevel.m', 'EqlzGCFB2Rms1at0dB', ...
     'ReadmeFirst.m', 'Readme_SignalLevel4GCFB.m', 'Readme_License.m','README.md'};
 for nFile = 1:length(NameFile1)
     if exist([DirTool char(NameFile1(nFile))]) == 0

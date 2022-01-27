@@ -1,15 +1,16 @@
 %
 %       Calculate Absolute threshold by Compression Health  GCFBv231  for  WHIS_GUI
 %       IRINO T.
-%       Created:  11 Oct 2021  from PlotIOfunc_GCFBv231.m
+%       Created:   11 Oct 2021  from PlotIOfunc_GCFBv231.m
 %       Modified:  11 Oct 2021  v231
+%       Modified:  27 Jan 2022  v231 minor change StartupGCFB;
 %
 %
 clear
 figure(1); clf;
 figure(2); clf;
 
-StartupGCFB
+StartupGCFB;
 DirProg = fileparts(which(mfilename)); % Ç±ÇÃÉvÉçÉOÉâÉÄÇ™Ç†ÇÈÇ∆Ç±ÇÎ
 DirFig = [DirProg '/Fig/'];
 

@@ -7,6 +7,7 @@
 %       Modified:  29 Aug 2021  v231
 %       Modified:  11 Oct 2021  v231
 %       Modified:  31 Dec 2021  modified subplot 
+%       Modified:  27 Jan 2022  v231 minor change StartupGCFB;
 %
 %
 %
@@ -14,7 +15,7 @@ clear
 figure(1); clf;
 figure(2); clf;
 
-StartupGCFB
+StartupGCFB;
 DirProg = fileparts(which(mfilename)); % ‚±‚ÌƒvƒƒOƒ‰ƒ€‚ª‚ ‚é‚Æ‚±‚ë
 DirFig = [DirProg '/Fig/'];
 

@@ -9,13 +9,14 @@
 %       Modified:  10 Feb 2021  (v230, introduction of GCFBv230_EnvModLoss)
 %       Modified:  28 Aug 2021 v231
 %       Modified:   2 Sep 2021 v231
+%       Modified:  27 Jan 2022 v231  using EqlzGCFB2Rms1at0dB for plot
 %
 %
 clear
 % close all
 
 % startup directory setting
-StartupGCFB
+StartupGCFB;
 
 %%%% Stimuli : a simple pulse train %%%%
 fs = 48000;
@@ -78,6 +79,7 @@ for SwDySt =  1%:2 % 1 % only dynamic
         GCparam.HLoss.CompressionHealth = 0.5;
         tic
         [dcGCframeHL, scGCsmplHL,GCparamHL,GCrespHL] = GCFBv231(Snd,GCparam);
+
         % GCparamHL.HLoss.Type
         % GCparamHL.HLoss.HearingLeveldB
         tm = toc;
@@ -100,39 +102,45 @@ for SwDySt =  1%:2 % 1 % only dynamic
         %%%%%%%%
         [GCEMframe, AnaEMparam] = GCFBv231_AnaEnvMod(dcGCframeHL,GCparam);
         
-        
+
         %%%%%%%%
         %% Plot results
-        %%%%%%%%
-        amp = 200;
+        %%%%%%%
+
+        % normazliation  (rms 1 == 0dB )  relative to Absolute threshold 0dB
+        dcGCframe     = EqlzGCFB2Rms1at0dB(dcGCframe);  
+        dcGCframeHL = EqlzGCFB2Rms1at0dB(dcGCframeHL);  
+        GCEMLoss = EqlzGCFB2Rms1at0dB(GCEMLoss);
+
+        amp = 6;
         subplot(3,1,1)
-        image(amp*max(dcGCframe,0));
+        image(amp*dcGCframe);
         set(gca,'YDir','normal');
         title(['NH SPL = ' int2str(SigSPL) ' (dB)'])
         
         subplot(3,1,2)
-        image(amp*max(dcGCframeHL,0));
+        image(amp*dcGCframeHL);
         set(gca,'YDir','normal');
         title(GCparamHL.HLoss.Type,'interpreter','none')
 
         subplot(3,1,3)
-        image(amp*max(GCEMLoss,0));
+        image(amp*GCEMLoss);
         set(gca,'YDir','normal');
         title([GCparamHL.HLoss.Type ' + TMTF reduction '],'interpreter','none')
    
-    end;
-end;    
+    end
+end
         
 nf = gcf;
 figure(nf.Number+1)
 cnt = 0;
-for nSlice = [100:50:250],
+for nSlice = [100:50:250]
     cnt = cnt +1;
     subplot(2,2,cnt);
     
     nchAll = 1:GCparam.NumCh;
     plot(nchAll, dcGCframe(nchAll,nSlice),nchAll, dcGCframeHL(nchAll,nSlice),'--',nchAll, GCEMLoss(nchAll,nSlice),'-.');
-end;
+end
 
 
 
