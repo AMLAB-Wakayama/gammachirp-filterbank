@@ -54,7 +54,8 @@
 %       Modified:    3 Sep 2021  v231 some tests
 %       Modified:  11 Sep 2021  v231 some tests
 %       Modified:    7 Oct  2021  v231 debug IOfunction errors
-%       Modified:   25 Oct  2021 v231 introducing  MkFilterField2Cochlea
+%       Modified:  25 Oct  2021 v231 introducing  MkFilterField2Cochlea
+%       Modified:  27 Jan 2022  v231 minor change StartupGCFB;
 %
 % function [dcGCout, scGCsmpl, GCparam, GCresp] = GCFBv231(SndIn,GCparam)
 %      INPUT:  Snd:    Input Sound
@@ -98,7 +99,7 @@ function [dcGCout, scGCsmpl, GCparam, GCresp] = GCFBv231(SndIn,GCparam)
 
 disp(['-------------------- ' mfilename ' --------------------' ]);
 % startup directory setting
-StartupGCFB
+StartupGCFB;
 
 %%%% Handling Input Parameters %%%%%
 if nargin < 2

@@ -4,6 +4,7 @@
 %       Created:   24 Oct 2021  (from testGCFBv231)
 %       Modified:  24 Oct 2021
 %       Modified:     8 Nov 2021
+%       Modified:  27 Jan 2022  v231 minor change StartupGCFB;
 %
 %        Note: Compression health ==  OHC health
 %
@@ -12,7 +13,7 @@ close all
 % close all
 
 % startup directory setting
-StartupGCFB
+StartupGCFB;
 
 %%%% Stimuli : a simple pulse train %%%%
 fs = 48000;

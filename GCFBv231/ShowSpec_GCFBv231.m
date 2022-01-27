@@ -3,6 +3,7 @@
 %       Toshio IRINO
 %       Created:   20 Jan 2022 from testGCFBv231
 %       Modified:  20 Jan 2022 
+%       Modified:  27 Jan 2022  using EqlzGCFB2Rms1at0dB
 %
 %
 clear
@@ -11,7 +12,7 @@ DirProg = fileparts(which(mfilename)); % Directory of this program
 DirFig = [DirProg '/Fig/'];
 
 % startup directory setting
-StartupGCFB
+StartupGCFB;
 [Snd,fs] = audioread('Snd_Hello123.wav');
 
 LenSnd = length(Snd);
@@ -35,7 +36,7 @@ SigSPL = 65;
 Snd =  Eqlz2MeddisHCLevel(Snd(:)',SigSPL);  % normalization
 OHChealth = 0.5;
 %OHChealth = 1;
-%OHChealth = 0;
+OHChealth = 0;
 
 for SwNHHL = [1:3]
     %%%% GCFB %%%%
@@ -57,26 +58,21 @@ for SwNHHL = [1:3]
     tm = toc;
     disp(['Elapsed time is ' num2str(tm,4) ' (sec) = ' num2str(tm/Tsnd,4) ' times RealTime.']);
     disp(' ');
-    disp(GCparam.HLoss.CompressionHealth);
+    disp(['OHC health: ' sprintf('%5.3f, ', GCparam.HLoss.CompressionHealth)]);
+    MeanOHChealth =  mean(GCparam.HLoss.CompressionHealth);
+    disp(['Mean(OHChealth) = ' num2str(round(MeanOHChealth*100)/100)]);
 
     %%%%%%%%
-    %% Dealing with absolute threshold
+    %% GCFB re. absolute threshold 0dB --> rms 1
     %%%%%%%
-    GCoutReAT = dcGCframe*10^(GCparam.MeddisIHCLevel_RMS0dB_SPLdB/20); 
-     % Output relative to Absolute threshold (0 dB by Meddis HC level)
-    [NumCh,LenFrame] = size(GCoutReAT);
-    % Selection of floor 
-    SwFloor =1;
-    if SwFloor == 1
-        GCoutReAT = max(GCoutReAT,1)-1;  % 0 clear at AbsThresh
-    else
-        rng(12345)
-        GCoutReAT = GCoutReAT + randn(NumCh,LenFrame); % Adding Gaussian noise (rms=1)
-    end
+    % StrFloor = 'AddNoise';
+    StrFloor = 'FloorZero';
+    GCoutReAT = EqlzGCFB2Rms1at0dB(dcGCframe,StrFloor);
 
     %%%%%%%%
     %% Plot results
     %%%%%%%%
+    [NumCh,LenFrame] = size(GCoutReAT);
     tms = (0:LenFrame-1)/GCparam.DynHPAF.fs; % 
     if SwNHHL == 1
         subplot(4,1,1)
@@ -96,10 +92,10 @@ for SwNHHL = [1:3]
 end
 
 try
-    ReSubPlot(4,1,0) % cleanup subplot (not provided)
+    ReSubPlot(4,1,0); % cleanup subplot (not provided)
 end
 NameFig = [DirFig '/Fig_SpecExample_NH70yr80yr_OH' ...
-    int2str(OHChealth*100)];
+    int2str(MeanOHChealth*100)];
 printi(3,0,1.2);
 % print(NameFig,'-depsc','-tiff'); % heavy for ppt
 print(NameFig,'-dpng'); 
