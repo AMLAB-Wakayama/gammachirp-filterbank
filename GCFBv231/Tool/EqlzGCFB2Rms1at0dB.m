@@ -3,11 +3,13 @@
 %    Irino, T.
 %   Created:   27 Jan 2022 
 %   Modified:  27 Jan 2022
+%   Modified:  28 Jan 2022
+%   Modified:  30 Jan 2022
 %
 %   GCreAT = EqlzGCFB2Rms1at0dB(GCval,StrFloor)
 %       INPUT:        GCval : the output of GCFBv231  rms(snd) == 1 -->  30 dB
-%                          StrFloor:   'AddNoise'  adding Gauss noise     (rms(randn)==1)
-%                                            'FloorZero'  set 0 for the value less than 1
+%                          StrFloor:   'NoiseFlooe'  adding Gauss noise     (rms(randn)==1)
+%                                            'ZeroFloor'  set 0 for the value less than 1
 %       OUTPUT:    GCreAT :   GC relative to AbsThreshold 0dB ( rms(snd) ==  1 --> 0 dB)
 %  
 %   Note:
@@ -24,10 +26,12 @@ MeddisHCLeveldB_RMS1 = 30;  % used in GCFB level set
 GCreAT  = 10^(MeddisHCLeveldB_RMS1/20)*GCval;
 
 if nargin > 1
-    if strcmp(StrFloor,'AddNoise' ) == 1
+    if strcmp(StrFloor,'NoiseFloor' ) == 1
         GCreAT = GCreAT + randn(size(GCreAT));  % adding  gauss noise
-    elseif strcmp(StrFloor,'FloorZero' ) == 1
+    elseif strcmp(StrFloor,'ZeroFloor' ) == 1
         GCreAT = max(GCreAT-1,0);   % cutoff value less than 1
+    else
+        error('Specify StrFloor properly:  NoiseFloor or ZeroFloor')
     end
 end
 

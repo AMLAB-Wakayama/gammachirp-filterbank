@@ -11,7 +11,8 @@
 %	    Modified:  20 Feb 18   IT, if nargin < 1
 %	    Modified:  16 Jul 20    IT, %  Separated: TransFuncMiddleEar_Moore16, FreeField2EarDrum_Moore16,  DiffuseField2EarDrum_Moore16
 %	    Modified:  26 Oct 21   IT,  interp1 linear extrap;  ITU, ParamIn.TypeField2EarDrum='FreeField'
-%	    Modified:  27 Jun 21   Use TransFuncField2EarDrum_Set.m
+%	    Modified:  27 Jun 21   IT, Use TransFuncField2EarDrum_Set.m
+%     Modified:   6 Feb 2022   IT, Added  EarDrum direct, i.e., NO Field to Ear drum
 %
 %
 %	function TransFunc = TransFuncField2Cochlea(ParamIn);
@@ -100,6 +101,7 @@ TypeField2EarDrumList = { ...
     'FreeField2EarDrum_Moore16';  ...
     'DiffuseField2EarDrum_Moore16'; 
     'ITUField2EarDrum'; ...
+    'NoField2EarDrum'; ...          % EarDrum direct 6 Feb 2022
     'HD580_L_AMLAB15';'HD580_R_AMLAB15'; ...
     'HD650_L_AMLAB16';'HD650_R_AMLAB16'; ...
     };
@@ -107,7 +109,7 @@ TypeField2EarDrumList = { ...
 SwCrct = [];
 for nc = 1:length(TypeField2EarDrumList)
     LenMatch = 3;
-    if nc >= 4, LenMatch = 7; end
+    if nc >= 5, LenMatch = 7; end
     if strncmp(upper(ParamIn.TypeField2EarDrum),upper(char(TypeField2EarDrumList(nc))), LenMatch) == 1
         SwCrct = nc;
     end
@@ -135,7 +137,10 @@ if SwCrct <= 3
     % log‚¾‚Æfreq=0‚ðˆµ‚¦‚È‚¢B‚Å‚à’®Šo“Á«‚É‡‚í‚¹‚½‚¢‚Ì‚ÅFreq2ERB
     Field2EarDrumdB = interp1(Freq2ERB(FreqTbl),FrspdBTbl,Freq2ERB(freq),StrInterp1,'extrap'); 
 
-elseif SwCrct >= 4
+elseif SwCrct == 4  % NO Field2EarDrumdB 
+    Field2EarDrumdB = zeros(size(freq)); % == 0 dB
+    
+elseif SwCrct >= 5
     NameImpRsp = [ 'ImpRsp_' char(TypeField2EarDrumList(SwCrct)) '.wav'];
     disp(['Read Impulse response : ' NameImpRsp]);
     tic

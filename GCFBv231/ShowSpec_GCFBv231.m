@@ -65,8 +65,8 @@ for SwNHHL = [1:3]
     %%%%%%%%
     %% GCFB re. absolute threshold 0dB --> rms 1
     %%%%%%%
-    % StrFloor = 'AddNoise';
-    StrFloor = 'FloorZero';
+    % StrFloor = 'NoiseFloor'; 
+    StrFloor = 'ZeroFloor';
     GCoutReAT = EqlzGCFB2Rms1at0dB(dcGCframe,StrFloor);
 
     %%%%%%%%
