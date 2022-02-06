@@ -4,6 +4,7 @@
 %   Created:   27 Jan 2022 
 %   Modified:  27 Jan 2022
 %   Modified:  28 Jan 2022
+%   Modified:  30 Jan 2022
 %
 %   GCreAT = EqlzGCFB2Rms1at0dB(GCval,StrFloor)
 %       INPUT:        GCval : the output of GCFBv231  rms(snd) == 1 -->  30 dB
@@ -29,6 +30,8 @@ if nargin > 1
         GCreAT = GCreAT + randn(size(GCreAT));  % adding  gauss noise
     elseif strcmp(StrFloor,'ZeroFloor' ) == 1
         GCreAT = max(GCreAT-1,0);   % cutoff value less than 1
+    else
+        error('Specify StrFloor properly:  NoiseFloor or ZeroFloor')
     end
 end
 
