@@ -53,9 +53,10 @@
 %       Modified:  29 Aug 2021  v231
 %       Modified:    3 Sep 2021  v231 some tests
 %       Modified:  11 Sep 2021  v231 some tests
-%       Modified:    7 Oct  2021  v231 debug IOfunction errors
-%       Modified:  25 Oct  2021 v231 introducing  MkFilterField2Cochlea
+%       Modified:    7 Oct 2021  v231 debug IOfunction errors
+%       Modified:  25 Oct 2021 v231 introducing  MkFilterField2Cochlea
 %       Modified:  27 Jan 2022  v231 minor change StartupGCFB;
+%       Modified:  27 Jan 2022  v231 introducing GCparam.OutMidCrct = 'EarDrum'; 
 %
 % function [dcGCout, scGCsmpl, GCparam, GCresp] = GCFBv231(SndIn,GCparam)
 %      INPUT:  Snd:    Input Sound
@@ -118,7 +119,7 @@ Tstart   = clock;
 %%%%% Outer-Mid Ear Compensation %%%%
 if strcmp(upper(GCparam.OutMidCrct),'NO') == 0
     disp(['*** Outer/Middle Ear correction (minimum phase) : ' GCparam.OutMidCrct ' ***']);
-    CmpnstOutMid = MkFilterField2Cochlea(GCparam.OutMidCrct,fs,1);   
+    [CmpnstOutMid, ParamF2C] = MkFilterField2Cochlea(GCparam.OutMidCrct,fs,1);   
     % new 25 Oct 2021
     % [FIRCoef, Param] = MkFilterField2Cochlea(StrCrct,fs,SwFwdBwd,SwPlot) % (1) forward  (-1) backward
     %
@@ -129,8 +130,10 @@ if strcmp(upper(GCparam.OutMidCrct),'NO') == 0
     % No compensation is necessary.  16 Apr. 2006
     % for inverse filer,  use OutMidCrctFilt('ELC',fs,0,1);    
     Snd = filter(CmpnstOutMid,1,SndIn);
+    GCparam.Field2Cochlea = ParamF2C;
 else
-    disp('*** No Outer/Middle Ear correction ***');
+    GCparam.Field2Cochlea = 'No Outer/Middle Ear correction';
+    disp(['*** ' GCparam.Filed2Cochlea ' ***']);
     Snd = SndIn;
 end
 

@@ -10,6 +10,7 @@
 %       Modified:  28 Aug 2021 v231
 %       Modified:   2 Sep 2021 v231
 %       Modified:  27 Jan 2022 v231  using EqlzGCFB2Rms1at0dB for plot
+%       Modified:   6  Feb 2022  v231 introducing GCparam.OutMidCrct = 'EarDrum'; 
 %
 %
 clear
@@ -62,10 +63,11 @@ for SwDySt =  1%:2 % 1 % only dynamic
         %GCparam.OutMidCrct = 'No';
         GCparam.OutMidCrct = 'ELC';
         GCparam.OutMidCrct = 'FreeField';
+        GCparam.OutMidCrct = 'EarDrum'; %	introduced  6 Feb 22  
         
         if SwDySt == 1, GCparam.Ctrl = 'dynamic'; % used to be 'time-varying'
         else    GCparam.Ctrl = 'static'; % or 'fixed'
-        end;
+        end
         
         GCparam.DynHPAF.StrPrc = 'frame-base';
         % GCparam.DynHPAF.StrPrc = 'sample';
