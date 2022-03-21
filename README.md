@@ -2,14 +2,14 @@
 %%  
 %% README file for gammachirp auditory filterbank (GCFB)  
 %%  
-%% Copyright (c) 2006-2021  Wakayama University  
+%% Copyright (c) 2006-2022  Wakayama University  
 %% All rights reserved.  
-%% By Toshio Irino , 5 Dec 2021  
+%% By Toshio Irino , 20 Mar 2022
 %%  
 %% ======================================================================  
    
 Gammchirp auditory filterbank [1]  
-See ReadmeFirst.m in the individual directory.  
+See _Readme.m in the individual directory.  
 
 Packages:  
 * GCFBv211pack:  Dec 2018 version  
@@ -29,6 +29,15 @@ Packages:
 	- "Sample-by-sample" processing is not much changed from v211. 
 	- This version is essential for hearing impairment simulator, WHISv300.  
 
+* GCFBv232:  Mar 2022 version  
+	- Introducing DigitalRms1SPLdB for precise calculation. 
+	- Renamed function names as GCFBv231_FunctionName --> GCFBv23_FunctionName
+	- Other features are the same as in GCFBv231
+
+* GCFBv233:  20 Mar 2022 version  
+	- Parameter names with "OHC" and "IHC" were changed to "ACT" and "PAS"
+	- Other features are the same as in GCFBv232
+
 --- 
   
 Reference:  
@@ -38,14 +47,14 @@ Reference:
 
 ---
 
-Programs  (GCFBv231 and probably applicable for the latest version): 
+Programs  (GCFBv23x and probably applicable for the latest version): 
   
-- testGCFBv231.m :   test / example program. Execute this program first.  
+- testGCFBv23x.m :   test / example program. Execute this program first.  
   
 - StartupGCFB.m :  Path setting. Execute this if necessary.  
 
 
-- GCFBv231.m : main body  
+- GCFBv233.m : main body  
 	- Important functions and parameters (default)
 	  - Eqlz2MeddisHCLevel.m  : input level control for simplicity. You may specify SPL more strictly.
 	  - GCparam.OutMidCrct = 'FreeField'; % Sound source/position selection  
@@ -56,15 +65,17 @@ Programs  (GCFBv231 and probably applicable for the latest version):
       - GCparam.HLoss.Type = 'HL0'; % manual setting  
 	       Example of setting:  GCparam.HLoss.HearingLeveldB = [ 5  5  6  7 12 28 39] +5;  % HL4+5dB   
       - GCparam.HLoss.Type = 'HL1' ~ 'HL8' % various types of example hearing loss   
-	  - See GCFBv231_HearingLoss.m (lines 200-240) for detail   
-   
-- GCFBv231_EnvModLoss.m :  Envelop modulation (TMTF) loss calculation (beta version)  
+	  - See GCFBv23_HearingLoss.m (lines 200-240) for detail   
+
+- GCFBv23x.m : wrapping function to main version for easy maintanance 
+
+- GCFBv23_EnvModLoss.m :  Envelop modulation (TMTF) loss calculation (beta version)  
 	 
-- GCFBv231_AnaEnvMod.m :  Modulation filterbank calculation (beta version)  
+- GCFBv23_AnaEnvMod.m :  Modulation filterbank calculation (beta version)  
 	  
-- ShowIOfunction_ExctPtn_GCFBv231.m :  Show Input-output function based on excitation pattern  
-  
-- ShowIOfunction_AsymFunc_GCFBv231.m :  Show Input-output function by Asymmetric Function   
+- ShowIOfunction_ExctPtn_GCFBv23.m :  Show Input-output function based on excitation pattern
+
+- ShowIOfunction_AsymFunc_GCFBv23.m :  Show Input-output function by Asymmetric Function   
   
 - There are some other programs to show the characteristics of GCFB.   
   
