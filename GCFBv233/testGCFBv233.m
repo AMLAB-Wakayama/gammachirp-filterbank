@@ -75,7 +75,7 @@ for SwDySt =  1%:2 % 1 % only dynamic
         % GCparam.DynHPAF.StrPrc = 'sample';
         
         GCparam.HLoss.Type = 'NH';
-        [dcGCframe, scGCsmpl,GCparam,GCresp] = GCFBv23x(SndEqM,GCparam);
+        [dcGCframe, scGCsmpl,GCparam,GCresp] = GCFBv233(SndEqM,GCparam);
 
         % GCparam.HLoss.Type = 'HL0'; % manual setting
         %GCparam.HLoss.HearingLeveldB = [ 5  5  6  7 12 28 39] +5;  % HL4+5dB
