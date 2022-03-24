@@ -9,12 +9,13 @@
 %       Modified:  28 Aug 2021 v231
 %       Modified:   6  Mar 2022  v232  rename of GCFBv231_func -->  GCFBv23_func 
 %       Modified:  20 Mar 2022  v302  <--- GCFBv233  to avoid misleading  HL_OHC --> HL_ACT, HL_IHC --> HL_PAS
+%       Modified:  24 Mar 2022  v302  
 %
 %
 
 %%%% Stimuli : a simple pulse train %%%%
 DirProg = fileparts(which(mfilename)); % Directory of this program
-DirFig = [DirProg '/Fig/'];
+DirFig = [DirProg '/Document/'];
 
 if exist('GCresp') == 0
     testGCFBv233

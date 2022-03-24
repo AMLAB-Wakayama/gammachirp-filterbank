@@ -8,9 +8,9 @@ Thumbs.db
 Tool/*.asv
 
 # Local
-_Local
-Previous
-previous
+_Local/
+Previous/
+previous/
 
 
 # ignore old ones -- No track 27 Jan 2022
