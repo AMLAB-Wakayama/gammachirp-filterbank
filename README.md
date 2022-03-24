@@ -49,10 +49,9 @@ Reference:
 
 Programs  (GCFBv23x and probably applicable for the latest version): 
   
-- testGCFBv23x.m :   test / example program. Execute this program first.  
+- testGCFBv233.m :   test / example program. Execute this program first.  
   
 - StartupGCFB.m :  Path setting. Execute this if necessary.  
-
 
 - GCFBv233.m : main body  
 	- Important functions and parameters (default)
@@ -67,20 +66,14 @@ Programs  (GCFBv23x and probably applicable for the latest version):
       - GCparam.HLoss.Type = 'HL1' ~ 'HL8' % various types of example hearing loss   
 	  - See GCFBv23_HearingLoss.m (lines 200-240) for detail   
 
-- GCFBv23x.m : wrapping function to main version for easy maintanance 
-
 - GCFBv23_EnvModLoss.m :  Envelop modulation (TMTF) loss calculation (beta version)  
 	 
 - GCFBv23_AnaEnvMod.m :  Modulation filterbank calculation (beta version)  
 	  
-- ShowIOfunction_ExctPtn_GCFBv23.m :  Show Input-output function based on excitation pattern
-
-- ShowIOfunction_AsymFunc_GCFBv23.m :  Show Input-output function by Asymmetric Function   
-  
 - There are some other programs to show the characteristics of GCFB.   
   
 Directories   
- - 	Fig/ :  Some figures derived from the sample programs and related documents  
- -	Tools/ :  Tools for GCFB  (execute StartupGCFB.m to setpath)  
+ - 	Document/ :  Related documents  
+ -	Tool/ :  Tools for GCFB  (execute StartupGCFB.m to setpath)  
 
   
