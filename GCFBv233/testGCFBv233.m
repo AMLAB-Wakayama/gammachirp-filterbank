@@ -82,7 +82,7 @@ for SwDySt =  1%:2 % 1 % only dynamic
         GCparam.HLoss.Type = 'HL3';
         GCparam.HLoss.CompressionHealth = 0.5;
         tic
-        [dcGCframeHL, scGCsmplHL,GCparamHL,GCrespHL] = GCFBv23x(SndEqM,GCparam);
+        [dcGCframeHL, scGCsmplHL,GCparamHL,GCrespHL] = GCFBv233(SndEqM,GCparam);
 
         % GCparamHL.HLoss.Type
         % GCparamHL.HLoss.HearingLeveldB
