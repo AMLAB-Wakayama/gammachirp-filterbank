@@ -37,13 +37,19 @@ Packages:
 * GCFBv233:  20 Mar 2022 version  
 	- Parameter names with "OHC" and "IHC" were changed to "ACT" and "PAS"
 	- Other features are the same as in GCFBv232
+	- See arXiv preprint "arXiv_WHISgc22_I.pdf" for the detail of GCFBv23
+
 
 --- 
   
 Reference:  
 - [1] Toshio Irino and Roy D. Patterson, "A dynamic compressive gammachirp auditory filterbank" IEEE Trans. Audio, Speech, and Language Process., 14(6), pp.2222-2232, Nov. 2006. [doi:10.1109/TASL.2006.874669 ] 　   
 - [2] Toshio Irino, "A new implementation of hearing impairment simulator WHIS based on the gammachirp auditory filterbank," Report of ASJ hearing commitee meeting, 11 Dec 2021 (Main text in Japanese, with English extended abstract)    
---> English document is under preparation.  
+- [3] Toshio Irino, "WHIS: Hearing impairment simulator based on the gammachirp auditory filterbank," arXiv preprint, [arXiv.2206.06604], 
+https://doi.org/10.48550/arXiv.2206.06604, 14 Jun 2022.
+
+
+Report of ASJ hearing commitee meeting, 11 Dec 2021 (Main text in Japanese, with English extended abstract)   
 
 ---
 
