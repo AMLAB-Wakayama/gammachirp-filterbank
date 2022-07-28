@@ -49,8 +49,6 @@ Reference:
 https://doi.org/10.48550/arXiv.2206.06604, 14 Jun 2022. 
 
 
-Report of ASJ hearing commitee meeting, 11 Dec 2021 (Main text in Japanese, with English extended abstract)   
-
 ---
 
 Programs  (GCFBv23x and probably applicable for the latest version): 
