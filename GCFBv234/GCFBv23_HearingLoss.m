@@ -22,7 +22,7 @@
 %       Modified:   6  Mar 2022  v232  rename of GCFBv231_func -->  GCFBv23_func 
 %       Modified:  20 Mar 2022  v233  to avoid misleading  HL_OHC --> HL_ACT, HL_IHC --> HL_PAS
 %       Modified:   8 Sep  2022  v234  compativility of NH and HL0 [0 0 0 0 0 0 0]
-%       Modified:  19 Oct  2022  v234  minor debug
+%       Modified:  19 Oct  2022  v234  minor modification in "Compenstated GCparam.HLoss.CompressionHealth "
 %
 %    function [GCparam] = CalGCHearingLoss(GCparam,GCresp)
 %            INPUT:    Necessary: GCparam.HLoss.FaudgramList, --.HearingLevel, --.CompressionHealth
