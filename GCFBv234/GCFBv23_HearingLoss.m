@@ -22,6 +22,7 @@
 %       Modified:   6  Mar 2022  v232  rename of GCFBv231_func -->  GCFBv23_func 
 %       Modified:  20 Mar 2022  v233  to avoid misleading  HL_OHC --> HL_ACT, HL_IHC --> HL_PAS
 %       Modified:   8 Sep  2022  v234  compativility of NH and HL0 [0 0 0 0 0 0 0]
+%       Modified:  19 Oct  2022  v234  minor modification in "Compenstated GCparam.HLoss.CompressionHealth "
 %
 %    function [GCparam] = CalGCHearingLoss(GCparam,GCresp)
 %            INPUT:    Necessary: GCparam.HLoss.FaudgramList, --.HearingLevel, --.CompressionHealth
@@ -82,8 +83,10 @@ for nFag = 1:LenFag
         PindB_ACTreduction     =  GCFBv23_AsymFuncInOut_InvIOfunc(GCparam,GCresp,Fr1query,CompressionHealth,HL0_IOfuncdB_CH1);
         PinLossdB_ACT(nFag)   = PindB_ACTreduction - HL0_PinCochleadB(nFag);   % HLossdBは正の数
         PinLossdB_PAS(nFag)   = GCparam.HLoss.HearingLeveldB(nFag) - PinLossdB_ACT(nFag);  % 0以下でも-0.3dB 程度のずれあり。多少ずれてもかまわない
-        disp(['Compenstated GCparam.HLoss.CompressionHealth ( ' int2str(Fr1query) ' Hz ) : '  ...
-            num2str(GCparam.HLoss.CompressionHealth_InitVal(nFag)) ' --> ' num2str(CompressionHealth) ]);
+        if abs(GCparam.HLoss.CompressionHealth_InitVal(nFag) - CompressionHealth) > eps   % 誤差が大きい時のみ表示。19 Oct 22
+            disp(['Compenstated GCparam.HLoss.CompressionHealth ( ' int2str(Fr1query) ' Hz ) : '  ...
+                num2str(GCparam.HLoss.CompressionHealth_InitVal(nFag)) ' --> ' num2str(CompressionHealth) ]);
+        end
     end
     
     % これが0にならないことはないが、debug用に置いておく
