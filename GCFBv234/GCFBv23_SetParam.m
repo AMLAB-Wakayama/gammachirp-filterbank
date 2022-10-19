@@ -29,6 +29,8 @@
 %       Modified:  13 Aug 2021 (v230, error('GCFB may not work when max(FreqRange)*3 > fs. --- Set fs properly.');　)
 %       Modified:  28 Aug 2021  v231, no change in function
 %       Modified:   6  Mar 2022  v232  rename of GCFBv231_func -->  GCFBv23_func 
+%       Modified:  20 Mar 2022  v233 introduction of GCFBv23x
+%       Modified:    8 Oct 2022  v234 Debug in GCFBv23_HearingLoss
 %
 % function GCparam = GCFBv2xx_SetParam(GCparam)
 %  INPUT:  GCparam:  Your preset gammachirp parameters
@@ -48,23 +50,23 @@ function [GCparam, GCresp] = GCFBv23_SetParam(GCparam)
 
 %%%% Handling Input Parameters %%%%%
 if isfield(GCparam,'fs') == 0, GCparam.fs = [];  end
-if length(GCparam.fs) == 0,  
+if length(GCparam.fs) == 0  
         GCparam.fs  = 48000; 
 end
 
 if isfield(GCparam,'OutMidCrct') == 0, GCparam.OutMidCrct = []; end
-if length(GCparam.OutMidCrct) == 0, 
+if length(GCparam.OutMidCrct) == 0 
 	GCparam.OutMidCrct  = 'ELC';
 %%% if no OutMidCrct is not necessary, specify GCparam.OutMidCrct = 'no'; 
 end
 
 if isfield(GCparam,'NumCh') == 0,  GCparam.NumCh = [];   end
-if length(GCparam.NumCh) == 0, 
+if length(GCparam.NumCh) == 0 
 	% GCparam.NumCh  = 75;
 	GCparam.NumCh  = 100; % default value changed 26 Apr 2015
 end
 if isfield(GCparam,'FRange') == 0,  GCparam.FRange = [];   end
-if length(GCparam.FRange) == 0, 
+if length(GCparam.FRange) == 0 
 	GCparam.FRange  = [100 6000];
 end
 
@@ -77,37 +79,37 @@ end
 
 %%%%% Gammachirp  parameters %%%
 if isfield(GCparam,'n') == 0,  GCparam.n = [];   end
-if length(GCparam.n) == 0, 
+if length(GCparam.n) == 0 
          GCparam.n = 4;                 % default gammatone & gammachirp
 end
 
 %%% convention 
 
 if isfield(GCparam,'b1') == 0,  GCparam.b1 = [];   end
-if length(GCparam.b1) == 0,          % b1 becomes two coeffs. in v210 (18 Apr. 2015)
+if length(GCparam.b1) == 0          % b1 becomes two coeffs. in v210 (18 Apr. 2015)
          GCparam.b1 = [1.81, 0];     % frequency independent by 0 % 18 Apr. 2015
 end
-if length(GCparam.b1) == 1,
+if length(GCparam.b1) == 1
          GCparam.b1(2) = 0;          % frequency independent by 0
 end
 if isfield(GCparam,'c1') == 0,  GCparam.c1 = [];   end
-if length(GCparam.c1) == 0,          % c1 becomes two coeffs. in v210 (18 Apr. 2015)
+if length(GCparam.c1) == 0         % c1 becomes two coeffs. in v210 (18 Apr. 2015)
          GCparam.c1 = [-2.96, 0];    % frequency independent by 0 
 end
-if length(GCparam.c1) == 1, 
+if length(GCparam.c1) == 1
          GCparam.c1(2) = 0;          % frequency independent by 0 
 end
 if isfield(GCparam,'frat') == 0,  GCparam.frat = [];   end
-if length(GCparam.frat) == 0, 
+if length(GCparam.frat) == 0
          GCparam.frat = [0.466, 0; 0.0109, 0];                 
 end
 
 if isfield(GCparam,'b2') == 0,  GCparam.b2 = [];   end
-if length(GCparam.b2) == 0, 
+if length(GCparam.b2) == 0 
         GCparam.b2 = [2.17, 0; 0,0];   % no level-dependency  (8 Jul 05)
 end
 if isfield(GCparam,'c2') == 0,  GCparam.c2 = [];   end
-if length(GCparam.c2) == 0, 
+if length(GCparam.c2) == 0
   % GCparam.c2 = [2.20, 0; 0,0]; %v203: no level-dependency; no freq-dependency
   % GCparam.c2 = [1.98, 0; 0.0088, 0];  % == v203
   % GCparam.c2 = [2.0, 0; 0.010, 0];   % no freq-dependecy: level-dependent
@@ -124,14 +126,14 @@ if strncmp(GCparam.Ctrl,'fix',3), GCparam.Ctrl = 'static'; end
 if strncmp(GCparam.Ctrl,'tim',3), GCparam.Ctrl = 'dynamic'; end
 
 
-if strncmp(GCparam.Ctrl,'sta',3) ~= 1 & strncmp(GCparam.Ctrl,'dyn',3) ~= 1 ...
- & strncmp(GCparam.Ctrl,'lev',3) ~= 1,
+if strncmp(GCparam.Ctrl,'sta',3) ~= 1 && strncmp(GCparam.Ctrl,'dyn',3) ~= 1 ...
+ && strncmp(GCparam.Ctrl,'lev',3) ~= 1
   error(['Specify GCparam.Ctrl:  "static", "dynamic", or "level(-estimation)" ' ...
          ' (old version "fixed"/"time-varying") ']);
 end
 
 if isfield(GCparam,'GainCmpnstdB') == 0,  GCparam.GainCmpnstdB = [];   end
-if length(GCparam.GainCmpnstdB) == 0, 
+if length(GCparam.GainCmpnstdB) == 0
   GCparam.GainCmpnstdB  = -1;  % in dB. when LvlEst.c2==2.2, 1 July 2005
 end
 
@@ -140,27 +142,27 @@ end
 %%%%    Parameters for level estimation 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-if exist('GCparam.PpgcRef') == 1 | exist('GCparam.LvlRefdB') == 1  
+if exist('GCparam.PpgcRef') == 1 || exist('GCparam.LvlRefdB') == 1  
   disp('The parameter "GCparam.PpgcRef" is obsolete.');
   disp('The parameter "GCparam.LvlRefdB" is obsolete.');
   error('Please change it to GCparam.GainRefdB.'); 
 end
 
 if isfield(GCparam,'GainRefdB') == 0,  GCparam.GainRefdB = [];   end
-if length(GCparam.GainRefdB) == 0, 
+if length(GCparam.GainRefdB) == 0
          % GCparam.GainRefdB = 50;  % reference Ppgc level for gain normalization used in v221 and before
          GCparam.GainRefdB = 'NormIOfunc';    % New default v230  23 May 2020 --> 25 Jul 2020
 end
 
 if isfield(GCparam,'LeveldBscGCFB') == 0,  GCparam.LeveldBscGCFB = [];   end 
-if length(GCparam.LeveldBscGCFB) == 0, 
+if length(GCparam.LeveldBscGCFB) == 0
          GCparam.LeveldBscGCFB = 50;  % use it as default for  static-compressive GCFB (scGCFB)
 end
 
 if isfield(GCparam,'LvlEst') == 0,  GCparam.LvlEst = [];   end
 
 if isfield(GCparam.LvlEst,'LctERB') == 0,  GCparam.LvlEst.LctERB = [];   end
-if length(GCparam.LvlEst.LctERB) == 0, 
+if length(GCparam.LvlEst.LctERB) == 0
       % GCparam.LvlEst.LctERB = 1.0;  
       % Location of Level Estimation pGC relative to the signal pGC in ERB
       % see testGC_LctERB.m for fitting result. 10 Sept 2004
@@ -169,7 +171,7 @@ end
 
 
 if isfield(GCparam.LvlEst,'DecayHL') == 0, GCparam.LvlEst.DecayHL=[]; end
-if length(GCparam.LvlEst.DecayHL) == 0,
+if length(GCparam.LvlEst.DecayHL) == 0
         %%% GCparam.LvlEst.DecayHL = 1; % half life in ms,  Mar 2005
         GCparam.LvlEst.DecayHL = 0.5; % 18 July 2005
         %%% Original name was PpgcEstExpHL
@@ -181,50 +183,50 @@ if length(GCparam.LvlEst.DecayHL) == 0,
 end
 
 if isfield(GCparam.LvlEst,'b2') == 0, GCparam.LvlEst.b2=[]; end
-if length(GCparam.LvlEst.b2) == 0,
+if length(GCparam.LvlEst.b2) == 0
      % GCparam.LvlEst.b2 = 1.5;
      % GCparam.LvlEst.b2 = 2.01;          % = b2 bug!
      GCparam.LvlEst.b2 = GCparam.b2(1,1); % = b2   8 July 2005
 end
 
 if isfield(GCparam.LvlEst,'c2') == 0, GCparam.LvlEst.c2=[]; end
-if length(GCparam.LvlEst.c2) == 0,
+if length(GCparam.LvlEst.c2) == 0
      % GCparam.LvlEst.c2 = 2.7;
      % GCparam.LvlEst.c2 = 2.20;  % = c2
      GCparam.LvlEst.c2 = GCparam.c2(1,1); % = c2
 end
 
 if isfield(GCparam.LvlEst,'frat') == 0, GCparam.LvlEst.frat=[]; end
-if length(GCparam.LvlEst.frat) == 0,
+if length(GCparam.LvlEst.frat) == 0
     % GCparam.LvlEst.frat = 1.1;  %  when b=2.01 & c=2.20
     GCparam.LvlEst.frat = 1.08;   %  peak of cGC ~= 0 dB (b2=2.17 & c2=2.20)
 end
 
 if isfield(GCparam.LvlEst,'RMStoSPLdB')==0, GCparam.LvlEst.RMStoSPLdB=[]; end
-if length(GCparam.LvlEst.RMStoSPLdB) == 0,
+if length(GCparam.LvlEst.RMStoSPLdB) == 0
     GCparam.LvlEst.RMStoSPLdB = 30;   %  1 rms == 30 dB SPL for Meddis HC level
     GCparam.MeddisHCLevel_RMS0dB_SPLdB = 30;   %  1 rms == 30 dB SPL for Meddis HC level
     % わかりやすい名前に。17 Aug 21 -- どちらも同様に使える。
 end
 
 if isfield(GCparam.LvlEst,'Weight')==0, GCparam.LvlEst.Weight=[]; end
-if length(GCparam.LvlEst.Weight) ==0,
+if length(GCparam.LvlEst.Weight) ==0
     GCparam.LvlEst.Weight = 0.5;  
 end
 
 if isfield(GCparam.LvlEst,'RefdB')==0, GCparam.LvlEst.RefdB=[]; end
-if length(GCparam.LvlEst.RefdB) < 2,
+if length(GCparam.LvlEst.RefdB) < 2
     GCparam.LvlEst.RefdB = 50;  % 50 dB SPL
 end
 
 if isfield(GCparam.LvlEst,'Pwr')==0, GCparam.LvlEst.Pwr=[]; end
-if length(GCparam.LvlEst.Pwr) < 2,
+if length(GCparam.LvlEst.Pwr) < 2
     GCparam.LvlEst.Pwr = [ 1.5, 0.5 ];  % Weight for pGC & cGC 
 end
 
 % new 19 Dec 2011
 if isfield(GCparam,'NumUpdateAsymCmp')==0, GCparam.NumUpdateAsymCmp=[]; end
-if length(GCparam.NumUpdateAsymCmp) < 1,
+if length(GCparam.NumUpdateAsymCmp) < 1
     % GCparam.NumUpdateAsymCmp = 3;  % update every 3 sample (== 3*GCFBv207)
     GCparam.NumUpdateAsymCmp = 1;  % sample-by-sample (== GCFBv207)
 end
@@ -235,12 +237,12 @@ end
 %%%%%%%%%%%%%%%%%%%%%%%%%
 if isfield(GCparam,'DynHPAF')==0, GCparam.DynHPAF=''; end
 if isfield(GCparam.DynHPAF,'StrPrc')==0, GCparam.DynHPAF.StrPrc=''; end
-if length(GCparam.DynHPAF.StrPrc) < 1,
+if length(GCparam.DynHPAF.StrPrc) < 1
      GCparam.DynHPAF.StrPrc = 'sample-by-sample';  % default for backward compativility
      %%%   GCparam.DynHPAF.StrPrc = 'frame-based';
 end
 
-if strncmp(GCparam.DynHPAF.StrPrc,'frame',5) == 1,   % 16 May 2020
+if strncmp(GCparam.DynHPAF.StrPrc,'frame',5) == 1    % 16 May 2020
       GCparam.DynHPAF.Tframe  = 0.001;  % 1ms   <-- 5 msよりも良い
       % Not Use:   GCparam.DynHPAF.Tframe  = 0.0005;  % 1msと変わらない。安定のため1ms採用。
       GCparam.DynHPAF.Tshift    = 0.0005;  % 0.5ms   fs = 2000;  <-- 1 msよりも精度高い
@@ -292,9 +294,12 @@ GCresp.frat0Pc = GCresp.frat0val + GCresp.frat1val.*GCresp.PcHPAF;
 
 
 %% %%%%%%%%%%%%%%%%%%%%%%%
-%  GC Hearing Loss :  22 May 2020  --> 25 Jan 2021
+%  GC Hearing Loss 
 %%%%%%%%%%%%%%%%%%%%%%%%%
 [GCparam] = GCFBv23_HearingLoss(GCparam,GCresp);
+
+% for debug
+% [GCparam] = GCFBv23_HearingLoss_v233(GCparam,GCresp); disp('--- Old version used in v233 ---') 
 
 
 %% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

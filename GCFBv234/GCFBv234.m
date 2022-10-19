@@ -60,8 +60,10 @@
 %       Modified:   6  Mar 2022  v232  rename of GCFBv231_func -->  GCFBv23_func + modifed EqlzMeddisHCLevel
 %       Modified:  20 Mar 2022  v233  to avoid misleading  HL_OHC --> HL_ACT, HL_IHC --> HL_PAS
 %       Modified:  20 Mar 2022  v233 introduction of GCFBv23x
+%       Modified:    8 Oct 2022  v234 Debug in GCFBv23_HearingLoss
 %
-% function [dcGCout, scGCsmpl, GCparam, GCresp] = GCFBv233(SndIn,GCparam)
+%
+% function [dcGCout, scGCsmpl, GCparam, GCresp] = GCFBv234(SndIn,GCparam)
 %      INPUT:   Snd:    Input Sound
 %                   GCparam:  Gammachirp parameters
 %                   GCparam.fs:     Sampling rate          (48000)
@@ -99,7 +101,7 @@
 % rms(s(t)) == sqrt(mean(s.^2)) == 100 --> 70 dB SPL
 %
 %
-function [dcGCout, scGCsmpl, GCparam, GCresp] = GCFBv233(SndIn,GCparam)
+function [dcGCout, scGCsmpl, GCparam, GCresp] = GCFBv234(SndIn,GCparam)
 
 disp(['-------------------- ' mfilename ' --------------------' ]);
 % startup directory setting

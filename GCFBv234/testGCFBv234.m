@@ -14,6 +14,7 @@
 %       Modified:   6  Mar 2022  v232 modifed EqlzMeddisHCLevel & renamed  GCFBv231_func --> GCFBv23_func 
 %       Modified:  20 Mar 2022  v233  to avoid misleading  HL_OHC --> HL_ACT, HL_IHC --> HL_PAS
 %       Modified:  20 Mar 2022  v233 introduction of GCFBv23x
+%       Modified:    8 Oct 2022  v234 Debug in GCFBv23_HearingLoss
 %
 %
 % clear
@@ -43,19 +44,22 @@ for SwDySt =  1%:2 % 1 % only dynamic
         cnt = cnt+1;
         SndSPLdB = SndSPLdBList(SwSPL);
 
+        % You may use either method. 
         if SwEqlzMds == 1
+            % Conventional method  ~v231
             % You do not need to calibrate the sound level in advance.
-            % You'd better use the other one if you know the digital level and SPL.
-            SndEqM = Eqlz2MeddisHCLevel(SndSrc,SndSPLdBList);    
+            % You'd better use the other one if you know the correspondence between the digital level and SPL.
+            SndEqM = Eqlz2MeddisHCLevel(SndSrc,SndSPLdB);    
         else
-            % You need to know the sound level using reference DigitalRms1SPLdB.
-            % You can use precise definition of sound level.
+            % Alternative method v233~
+            % You can set SndEqM precisely 
+            % if you know SPL (dB) when rms(digital_s(t)) == 1 (i.e., DigitalRms1SPLdB).
             DigitalRms1SPLdB = 90;
             SndDigitalLeveldB = SndSPLdB - DigitalRms1SPLdB;
-            SndSrc = 10^(SndDigitalLeveldB/20) * SndSrc/rms(SndSrc);
-            SndEqM = Eqlz2MeddisHCLevel(SndSrc,[],DigitalRms1SPLdB);    
+            SndSrc1 = 10^(SndDigitalLeveldB/20)/rms(SndSrc) * SndSrc;
+            SndEqM = Eqlz2MeddisHCLevel(SndSrc1,[],DigitalRms1SPLdB);    
         end
-        
+
         %%%% GCFB %%%%
         GCparam = []; % reset all
         GCparam.fs     = fs;
@@ -63,7 +67,7 @@ for SwDySt =  1%:2 % 1 % only dynamic
         GCparam.FRange = [100, 6000];
         
         %GCparam.OutMidCrct = 'No';
-        GCparam.OutMidCrct = 'ELC';
+        %GCparam.OutMidCrct = 'ELC';
         GCparam.OutMidCrct = 'FreeField';
         % GCparam.OutMidCrct = 'EarDrum'; %	introduced  6 Feb 22  
         
@@ -75,14 +79,14 @@ for SwDySt =  1%:2 % 1 % only dynamic
         % GCparam.DynHPAF.StrPrc = 'sample';
         
         GCparam.HLoss.Type = 'NH';
-        [dcGCframe, scGCsmpl,GCparam,GCresp] = GCFBv233(SndEqM,GCparam);
+        [dcGCframe, scGCsmpl,GCparam,GCresp] = GCFBv234(SndEqM,GCparam);
 
         % GCparam.HLoss.Type = 'HL0'; % manual setting
         %GCparam.HLoss.HearingLeveldB = [ 5  5  6  7 12 28 39] +5;  % HL4+5dB
         GCparam.HLoss.Type = 'HL3';
         GCparam.HLoss.CompressionHealth = 0.5;
         tic
-        [dcGCframeHL, scGCsmplHL,GCparamHL,GCrespHL] = GCFBv233(SndEqM,GCparam);
+        [dcGCframeHL, scGCsmplHL,GCparamHL,GCrespHL] = GCFBv234(SndEqM,GCparam);
 
         % GCparamHL.HLoss.Type
         % GCparamHL.HLoss.HearingLeveldB

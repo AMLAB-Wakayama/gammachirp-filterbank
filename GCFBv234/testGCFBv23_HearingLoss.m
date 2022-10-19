@@ -1,5 +1,5 @@
 %
-%       test GCFBv230_HearingLoss
+%       test GCFBv23_HearingLoss
 %       Irino T.,
 %       Created: 21 May 20
 %       Modified: 21 May 20
@@ -8,8 +8,8 @@
 %       Modified:  24 Jan 2021 (InternalCmpnstLeveldB = -7, FactCmpnst --> OK)
 %       Modified:  28 Aug 2021 v231
 %       Modified:   6  Mar 2022  v232  rename of GCFBv231_func -->  GCFBv23_func 
-%       Modified:  20 Mar 2022  v302  <--- GCFBv233  to avoid misleading  HL_OHC --> HL_ACT, HL_IHC --> HL_PAS
-%       Modified:  24 Mar 2022  v302  
+%       Modified:  20 Mar 2022  v233  <--- GCFBv233  to avoid misleading  HL_OHC --> HL_ACT, HL_IHC --> HL_PAS
+%       Modified:  24 Mar 2022  v233  
 %
 %
 
