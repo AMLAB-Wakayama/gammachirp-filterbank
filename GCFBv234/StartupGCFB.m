@@ -1,5 +1,5 @@
 %
-%      startup m-file of GCFBv231. 
+%      startup m-file of GCFBv234. 
 %      IRINO T.
 %      Created:    14 Sep 2021
 %      Modified:   14 Sep 2021
