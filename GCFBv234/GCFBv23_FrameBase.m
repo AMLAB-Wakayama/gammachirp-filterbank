@@ -15,6 +15,7 @@
 %       Modified:   3 Sep  2021  v231 some tests
 %       Modified:  17 Sep 2021  renamed NumFrame --> LenFrame,  LenFrame--> LenWin  as  defined in SetFrame4TimeSequence
 %       Modified:   6  Mar 2022  v232  rename of GCFBv231_func -->  GCFBv23_func 
+%       Modified:  23 Oct 2022  v234 Minor modification display every 50 ch
 %       
 %
 % function [dcGCframe, GCresp] = GCFBv230_FrameBase(pGCsmpl, scGCsmpl, GCparam, GCresp)
@@ -108,7 +109,7 @@ for nch = 1:NumCh
     
     dcGCframe(nch,1:LenFrame) = AsymFuncGain(nch,:) .*scGCframe1;
     
-    if nch == 1 || rem(nch,20)==0
+    if nch == 1 || rem(nch,50)==0  % 20ch --> 50ch  23 Oct 22
         disp(['Frame-based HP-AF: ch #' num2str(nch) ' / #' num2str(NumCh) ...
             '.    elapsed time = ' num2str(fix(etime(clock,Tstart)*10)/10) ' (sec)']);
         

@@ -61,6 +61,7 @@
 %       Modified:  20 Mar 2022  v233  to avoid misleading  HL_OHC --> HL_ACT, HL_IHC --> HL_PAS
 %       Modified:  20 Mar 2022  v233 introduction of GCFBv23x
 %       Modified:    8 Oct 2022  v234 Debug in GCFBv23_HearingLoss
+%       Modified:  23 Oct 2022  v234 Minor modification display every 50 ch
 %
 %
 % function [dcGCout, scGCsmpl, GCparam, GCresp] = GCFBv234(SndIn,GCparam)
@@ -206,7 +207,7 @@ for nch=1:NumCh    %%%%%%%  Channel-by-channel processing of static filter
         if nch == 1, StrGC = 'Passive-Gammachirp*Fixed HP-AF = Level estimation filter'; end;
     end
     
-    if nch == 1 || rem(nch,20)==0
+    if nch == 1 || rem(nch,50)==0  % 20ch --> 50ch  23 Oct 22
         disp([StrGC ': ch #' num2str(nch) ' / #' num2str(NumCh) ...
             '.    elapsed time = ' num2str(fix(etime(clock,Tstart)*10)/10) ' (sec)']);
     end
