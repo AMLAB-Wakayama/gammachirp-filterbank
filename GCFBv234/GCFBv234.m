@@ -62,6 +62,7 @@
 %       Modified:  20 Mar 2022  v233 introduction of GCFBv23x
 %       Modified:    8 Oct 2022  v234 Debug in GCFBv23_HearingLoss
 %       Modified:  23 Oct 2022  v234 Minor modification display every 50 ch
+%       Modified:  18 May 2023 v234 Added comment on GCparam.HLoss
 %
 %
 % function [dcGCout, scGCsmpl, GCparam, GCresp] = GCFBv234(SndIn,GCparam)
@@ -71,6 +72,7 @@
 %                   GCparam.NumCh:  Number of Channels     (100)
 %                   GCparam.FRange: Frequency Range of GCFB:  default [100 6000]
 %                                                specifying asymptotic freq. of passive GC (Fr1)
+%                   GCparam.HLoss : struct of Hearing Loss setting ---> See  GCFBv23_HearingLoss.m
 %
 %      OUTPUT: 
 %              dcGCout:  Dynamic Compressive GammaChirp Filter Output    (Either sample or frame)

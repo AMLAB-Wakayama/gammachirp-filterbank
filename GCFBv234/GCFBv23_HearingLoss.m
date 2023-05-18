@@ -5,7 +5,7 @@
 %       Modified: 21 May 2020
 %       Modified: 22 May 2020
 %       Modified: 23 May 2020
-%       Modified: 18 Jul 2020 %コメント加え　nCH--> nCmprsHlth
+%       Modified: 18 Jul 2020 %Added comment　nCH--> nCmprsHlth
 %       Modified: 19 Jul 2020 %cにcompression healthをかけるように。（いままで、fratにCompressionHealthをかけていた）
 %       Modified:  24 Jul 2020  (IO function)
 %       Modified:  26 Jul 2020  (full debug)
@@ -13,7 +13,7 @@
 %       Modified:  24 Jan 2021 (InternalCmpnstLeveldB = -7, FactCmpnst --> OK)
 %       Modified:  10 Feb 2021 (HLval_ManualSet)
 %       Modified:  17 Aug 2021 using Fr1query = Fag   ( NOT Fp1)
-%       Modified:  25 Aug 2021 v231 前面書き換えTable--> interp1
+%       Modified:  25 Aug 2021 v231  Table--> interp1
 %       Modified:  29 Aug 2021 v231
 %       Modified:   1 Sep 2021  v231 debug  HL_OHC+HL_IHC
 %       Modified:   7 Oct  2021  v231 checking IOfunction errors
@@ -22,12 +22,30 @@
 %       Modified:   6  Mar 2022  v232  rename of GCFBv231_func -->  GCFBv23_func 
 %       Modified:  20 Mar 2022  v233  to avoid misleading  HL_OHC --> HL_ACT, HL_IHC --> HL_PAS
 %       Modified:   8 Sep  2022  v234  compativility of NH and HL0 [0 0 0 0 0 0 0]
-%       Modified:  19 Oct  2022  v234  minor modification in "Compenstated GCparam.HLoss.CompressionHealth "
+%       Modified:  19 Oct  2022 v234  minor modification in "Compenstated GCparam.HLoss.CompressionHealth "
+%       Modified:  18 May 2023 v234  Added comment on GCparam.HLoss
+%
 %
 %    function [GCparam] = CalGCHearingLoss(GCparam,GCresp)
-%            INPUT:    Necessary: GCparam.HLoss.FaudgramList, --.HearingLevel, --.CompressionHealth
-%                           GCresp.Fp1
+%            INPUT:    GCparam,GCresp.Fp1
 %           OUTPUT:  GCparam.HLoss :  PinLossdB_PAS, PinLossdB_ACT, FB_PinLossdB_PAS ...
+%
+%           For setting hearing loss, see  'function GCparam = SetHearingLoss(GCparam)'
+%           Basically the same as WHIS setting
+%           GCparam.HLoss.FaudgramList = [125, 250, 500, 1000, 2000, 4000, 8000];
+%           GCparam.HLoss.HearingLeveldB : hearing level in dB
+%           GCparam.HLoss.SwType : selection of preset hearing loss
+%                     NH:   Normal hearing (= Hearing level 0 dB)
+%                     HL0:  Manual setting of GCparam.HLoss.HearingLeveldB   -- necessary
+%                     HL1:  Example 1
+%                     HL2:  Tsuiki 2002 80yr (average of 80 years old listener)
+%                     HL3:  ISO7029 70yr male
+%                     HL4:  ISO7029 70yr female
+%                     HL5:  ISO7029 60yr male
+%                     HL6:  ISO7029 60yr female
+%                     HL7:  Example of otosclerosis　(textbook: Understanding audiogram p.47)
+%                     HL8:  Example of noise induced HL　(textbook: Understanding audiogram p.63)
+%     
 %
 % Note:  21 May 2020
 %             仮定:  pGCはNHでもHI listenerでも常に同じ。違うのはHP-AFのところのみ。
@@ -196,6 +214,7 @@ elseif strncmp(GCparam.HLoss.Type,'HL',2) == 1 % HL
     if length(NumHL) < 1, NumHL = str2num(GCparam.HLoss.Type(3)); end   %HL+1桁の場合
     GCparam.HLoss.SwType = NumHL;  % 'HL0','HL1','HL2', ...'HL7'... 'HL10', 'HL11' ....
     
+    %    Note:
     %    See HIsimFastGC_InitParamHI.m for the source --  番号を一致させる
     %     9  の   manual set  だけは、今後の extentionも考え、 0 番に
     %     ParamHI.AudiogramNum : audiogram select

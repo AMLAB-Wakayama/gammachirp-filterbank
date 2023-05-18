@@ -65,7 +65,8 @@ for SwDySt =  1%:2 % 1 % only dynamic
         GCparam.fs     = fs;
         GCparam.NumCh  = 100;
         GCparam.FRange = [100, 6000];
-        
+        GCparam.FRange = [100, 8000];
+       
         %GCparam.OutMidCrct = 'No';
         %GCparam.OutMidCrct = 'ELC';
         GCparam.OutMidCrct = 'FreeField';
