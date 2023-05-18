@@ -39,6 +39,8 @@ Packages:
 	- Other features are the same as in GCFBv232
 	- See arXiv preprint "arXiv_WHISgc22_I.pdf" [3] for the detail of GCFBv23
 
+* GCFBv234:   8 Oct 2022 version  
+
 
 --- 
   
