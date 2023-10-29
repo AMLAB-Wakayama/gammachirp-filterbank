@@ -8,8 +8,8 @@
 %
 %   GCreAT = EqlzGCFB2Rms1at0dB(GCval,StrFloor)
 %       INPUT:        GCval : the output of GCFBv231  rms(snd) == 1 -->  30 dB
-%                          StrFloor:   'NoiseFlooe'  adding Gauss noise     (rms(randn)==1)
-%                                            'ZeroFloor'  set 0 for the value less than 1
+%                          StrFloor:   'NoiseFloor'  adding Gauss noise     (rms(randn)==1)
+%                                          'ZeroFloor'  set 0 for the value less than 1
 %       OUTPUT:    GCreAT :   GC relative to AbsThreshold 0dB ( rms(snd) ==  1 --> 0 dB)
 %  
 %   Note:
