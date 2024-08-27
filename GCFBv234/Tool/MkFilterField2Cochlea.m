@@ -4,6 +4,7 @@
 %	    Created: 24 Oct 2021 (from OutMidCrctFilt.m see also MAR's src_to_cochlea_filt.m)
 %	    Modified: 25 Oct 2021
 %     Modified:   6 Feb 2022   IT, Added  EarDrum direct, i.e., NO Field to Ear drum
+%     Modified: 24 Aug 2024    IT, firpm in octave works only 50 coeff. see line 135
 %
 %	    Making minimum phase forward and inverse filter
 %     TransFuncDiffuseField2EarDrum_Moore16 etc.
@@ -48,22 +49,22 @@ if strcmp(StrCrct, 'FreeField') || strcmp(upper(StrCrct), 'FF')
 elseif strcmp(StrCrct, 'DiffuseField') || strcmp(upper(StrCrct), 'DF')
     SwType = 2;
     Param.TypeField2EarDrum  = 'DiffuseField';
-    Param.TypeMidEar2Cochlea = 'MiddleEar'; 
+    Param.TypeMidEar2Cochlea = 'MiddleEar';
 
 elseif strcmp(StrCrct, 'ITU')
     SwType = 3;
     Param.TypeField2EarDrum  = 'ITU';
-    Param.TypeMidEar2Cochlea = 'MiddleEar'; 
+    Param.TypeMidEar2Cochlea = 'MiddleEar';
 
 elseif strcmp(StrCrct, 'EarDrum') || strcmp(upper(StrCrct), 'ED')
     SwType = 4;
     Param.TypeField2EarDrum  = 'NoField2EarDrum'; % level at EarDrum: NO transfer function of Outer Ear
-    Param.TypeMidEar2Cochlea = 'MiddleEar'; 
+    Param.TypeMidEar2Cochlea = 'MiddleEar';
 
 elseif strcmp(StrCrct, 'ELC')   % for backward compativility
     SwType = 10;
     Param.TypeField2CochleadB  =  'ELC';  % for backward compativility
-    Param.TypeField2EarDrum  = 'NoUse_ELC';   
+    Param.TypeField2EarDrum  = 'NoUse_ELC';
     Param.TypeMidEar2Cochlea = 'NoUse_ELC';
 
 else
@@ -115,7 +116,6 @@ if SwType <= 4
     FrspCrct = 10.^(TransFunc.Field2CochleadB/20);
     freq = TransFunc.freq;
     Param.TypeField2CochleadB  = TransFunc.TypeField2CochleadB;
-
 elseif SwType == 10
     % ELC for backward compativility
     Nrslt = 2048;
@@ -129,10 +129,19 @@ if SwFwdBwd == -1  % Backward filter
     % from OutMidCrctFilt.m
 end
 
+
 % tic
-LenCoef = 200; %  ( -45 dB) <- 300 (-55 dB)
-NCoef = fix(LenCoef/16000*fs/2)*2;            % fs dependent length, even number only
-FIRCoef = firpm(NCoef,freq/fs*2,FrspCrct);  % the same coefficient
+try  % default for matlab
+  LenCoef = 200; %  ( -45 dB) <- 300 (-55 dB)　　-- Only for matlabroot
+  NCoef = fix(LenCoef/16000*fs/2)*2;            % fs dependent length, even number only
+  FIRCoef = firpm(NCoef,freq/fs*2,FrspCrct);  % the same coefficient
+catch % Ocatve
+  disp('-- For octave compatibility --')
+  LenCoef = 50; % For octave compatibility for octave compativility. 24 Aug 2024
+  NCoef = fix(LenCoef/16000*fs/2)*2;            % fs dependent length, even number only
+  FIRCoef = firpm(NCoef,freq/fs*2,FrspCrct);  % the same coefficient
+end
+
 
 Win     = TaperWindow(length(FIRCoef),'han',LenCoef/10); % Necessary to avoid sprious
 FIRCoef = Win.*FIRCoef;
@@ -158,7 +167,7 @@ TypeField2EarDrum_Keep = Param.TypeField2EarDrum;   % MATLABの都合上この�
 TypeMidEar2Cochlea_Keep = Param.TypeMidEar2Cochlea;
 
 %% %%%%%%%%%%%%%%%
-% Plot 
+% Plot
 %%%%%%%%%%%%%%%%%%
 
 if SwPlot==1
