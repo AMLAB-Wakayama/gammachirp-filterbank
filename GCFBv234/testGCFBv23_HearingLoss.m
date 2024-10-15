@@ -10,6 +10,7 @@
 %       Modified:   6  Mar 2022  v232  rename of GCFBv231_func -->  GCFBv23_func 
 %       Modified:  20 Mar 2022  v233  <--- GCFBv233  to avoid misleading  HL_OHC --> HL_ACT, HL_IHC --> HL_PAS
 %       Modified:  24 Mar 2022  v233  
+%       Modified:  10 Oct 2024  v234  
 %
 %
 
@@ -18,7 +19,7 @@ DirProg = fileparts(which(mfilename)); % Directory of this program
 DirFig = [DirProg '/Document/'];
 
 if exist('GCresp') == 0
-    testGCFBv233
+    testGCFBv234
 end
 
 figure(1); clf
