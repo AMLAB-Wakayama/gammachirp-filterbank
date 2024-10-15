@@ -24,10 +24,11 @@
 %       Modified:   8 Sep  2022  v234  compativility of NH and HL0 [0 0 0 0 0 0 0]
 %       Modified:  19 Oct  2022 v234  minor modification in "Compenstated GCparam.HLoss.CompressionHealth "
 %       Modified:  18 May 2023 v234  Added comment on GCparam.HLoss
+%       Modified:  15 Oct 2024 v234  debugged 
 %
 %
 %    function [GCparam] = CalGCHearingLoss(GCparam,GCresp)
-%            INPUT:    GCparam,GCresp.Fp1
+%           INPUT:   GCparam, GCresp.Fr1
 %           OUTPUT:  GCparam.HLoss :  PinLossdB_PAS, PinLossdB_ACT, FB_PinLossdB_PAS ...
 %
 %           For setting hearing loss, see  'function GCparam = SetHearingLoss(GCparam)'
@@ -126,10 +127,10 @@ end
 
 %　使用しない：　NHgainCmpnstBiasdB = [3.5, -1.3, -3, -3, -4, -3, -3] %NHでHL0dBに合わせるための補正値。アドホック
 NHgainCmpnstBiasdB = [0, 0, 0, 0, 0, 0, 0];  %補正値は無い方が良いことがわかった。2021/10/8
-GCparam.HLoss.AFgainCmpnstdB = GCparam.HLoss.AFgainCmpnstdB + NHgainCmpnstBiasdB;  
+GCparam.HLoss.AFgainCmpnstdB     = GCparam.HLoss.AFgainCmpnstdB + NHgainCmpnstBiasdB;  
 GCparam.HLoss.HLval_PinCochleadB = HLval_PinCochleadB; % renamed from HLval_SPLdB  17 Aug 2021
-GCparam.HLoss.PinLossdB_ACT        = PinLossdB_ACT;
-GCparam.HLoss.PinLossdB_PAS         = PinLossdB_PAS;
+GCparam.HLoss.PinLossdB_ACT      = PinLossdB_ACT;
+GCparam.HLoss.PinLossdB_PAS      = PinLossdB_PAS;
 GCparam.HLoss.PinLossdB_ACT_Init = PinLossdB_ACT_Init;
 
 
@@ -138,10 +139,10 @@ GCparam.HLoss.PinLossdB_ACT_Init = PinLossdB_ACT_Init;
 [ERBrateFr1] = Freq2ERB(GCresp.Fr1); % GC channel分
 GCparam.HLoss.FB_Fr1 = GCresp.Fr1;
 GCparam.HLoss.FB_HearingLeveldB     = interp1(ERBrateFag,GCparam.HLoss.HearingLeveldB, ERBrateFr1,'linear','extrap');
-GCparam.HLoss.FB_HLval_PinCochleadB  = interp1(ERBrateFag,GCparam.HLoss.HLval_PinCochleadB, ERBrateFr1,'linear','extrap');
-GCparam.HLoss.FB_PinLossdB_PAS        = interp1(ERBrateFag,GCparam.HLoss.PinLossdB_PAS, ERBrateFr1,'linear','extrap');
-GCparam.HLoss.FB_PinLossdB_ACT       = interp1(ERBrateFag,GCparam.HLoss.PinLossdB_ACT, ERBrateFr1,'linear','extrap');
-GCparam.HLoss.FB_CompressionHealth = min(max(interp1(ERBrateFag,GCparam.HLoss.CompressionHealth, ERBrateFr1,'linear','extrap'), 0), 1) ;    % 0<= CmprsHlth <= 1;
+GCparam.HLoss.FB_HLval_PinCochleadB = interp1(ERBrateFag,GCparam.HLoss.HLval_PinCochleadB, ERBrateFr1,'linear','extrap');
+GCparam.HLoss.FB_PinLossdB_PAS      = interp1(ERBrateFag,GCparam.HLoss.PinLossdB_PAS, ERBrateFr1,'linear','extrap');
+GCparam.HLoss.FB_PinLossdB_ACT      = interp1(ERBrateFag,GCparam.HLoss.PinLossdB_ACT, ERBrateFr1,'linear','extrap');
+GCparam.HLoss.FB_CompressionHealth  = min(max(interp1(ERBrateFag,GCparam.HLoss.CompressionHealth, ERBrateFr1,'linear','extrap'), 0), 1) ;    % 0<= CmprsHlth <= 1;
 GCparam.HLoss.FB_AFgainCmpnstdB     = interp1(ERBrateFag,GCparam.HLoss.AFgainCmpnstdB, ERBrateFr1,'linear','extrap');
 
 %% %%%%%%%%%%%
@@ -193,17 +194,18 @@ LenFag = length(GCparam.HLoss.FaudgramList);
 if isfield(GCparam.HLoss,'Type')==0, GCparam.HLoss.Type=''; end
 if length(GCparam.HLoss.Type) < 1 || strncmp(GCparam.HLoss.Type,'NH',2) == 1
     GCparam.HLoss.Type = 'NH_NormalHearing';  %%
-    GCparam.HLoss.HearingLeveldB       = zeros(1,LenFag);
+    GCparam.HLoss.HearingLeveldB      = zeros(1,LenFag);
     GCparam.HLoss.PinLossdB_ACT       = zeros(1,LenFag);
-    GCparam.HLoss.PinLossdB_PAS        = zeros(1,LenFag);
-    GCparam.HLoss.IOfuncLossdB_PAS   = zeros(1,LenFag);
+    GCparam.HLoss.PinLossdB_PAS       = zeros(1,LenFag);
+    GCparam.HLoss.IOfuncLossdB_PAS    = zeros(1,LenFag);
     if isfield(GCparam.HLoss,'CompressionHealth') == 0  % 外で与えられていない時だけ1にする
         GCparam.HLoss.CompressionHealth = ones(1,LenFag);
     end
-    GCparam.HLoss.FB_PinLossdB_ACT      = zeros(GCparam.NumCh,1);
-    GCparam.HLoss.FB_PinLossdB_PAS       = zeros(GCparam.NumCh,1);
-    GCparam.HLoss.FB_IOfuncLossdB_PAS  = zeros(GCparam.NumCh,1);
-    GCparam.HLoss.FB_CompressionHealth = ones(GCparam.NumCh,1);
+    % debug GCparam.NumChの指定が必要だが、ここで計算する必要なし：　共通で計算される。15 Oct 2024
+    % GCparam.HLoss.FB_PinLossdB_ACT     = zeros(GCparam.NumCh,1);
+    % GCparam.HLoss.FB_PinLossdB_PAS     = zeros(GCparam.NumCh,1);
+    % GCparam.HLoss.FB_IOfuncLossdB_PAS  = zeros(GCparam.NumCh,1);
+    % GCparam.HLoss.FB_CompressionHealth = ones(GCparam.NumCh,1);
     
 elseif strncmp(GCparam.HLoss.Type,'HL',2) == 1 % HL
     if isfield(GCparam.HLoss, 'CompressionHealth')  == 0
