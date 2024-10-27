@@ -24,7 +24,7 @@
 %       Modified:   8 Sep  2022  v234  compativility of NH and HL0 [0 0 0 0 0 0 0]
 %       Modified:  19 Oct  2022 v234  minor modification in "Compenstated GCparam.HLoss.CompressionHealth "
 %       Modified:  18 May 2023 v234  Added comment on GCparam.HLoss
-%       Modified:  15 Oct 2024 v234  debugged 
+%       Modified:  15 Oct 2024 v234  minor mod + comment
 %
 %
 %    function [GCparam] = CalGCHearingLoss(GCparam,GCresp)
