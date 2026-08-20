@@ -5,6 +5,7 @@
 %	    Modified: 25 Oct 2021
 %     Modified:  6 Feb 2022   IT, Added  EarDrum direct, i.e., NO Field to Ear drum
 %     Modified: 24 Aug 2024    IT, firpm in octave works only 50 coeff. see line 135
+%     Modified: 20 Aug 2026    IT, firpm -- upper limit 50 coeff. see line 135
 %
 %	    Making minimum phase forward and inverse filter
 %     TransFuncDiffuseField2EarDrum_Moore16 etc.
@@ -133,12 +134,12 @@ end
 % tic
 try  % default for matlab
   LenCoef = 200; %  ( -45 dB) <- 300 (-55 dB)　　-- Only for matlabroot
-  NCoef = fix(LenCoef/16000*fs/2)*2;            % fs dependent length, even number only
+  NCoef =  fix(LenCoef/16000*fs/2)*2;     % fs dependent length, even number only
   FIRCoef = firpm(NCoef,freq/fs*2,FrspCrct);  % the same coefficient
 catch % Ocatve
   disp('-- For octave compatibility --')
   LenCoef = 50; % For octave compatibility octave-9.2  24 Aug 2024
-  NCoef = fix(LenCoef/16000*fs/2)*2;            % fs dependent length, even number only
+  NCoef = min( fix(LenCoef/16000*fs/2)*2, LenCoef);      % upper limit 50,   20 Aug 2026
   FIRCoef = firpm(NCoef,freq/fs*2,FrspCrct);  % the same coefficient
 end
 
