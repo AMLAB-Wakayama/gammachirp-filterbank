@@ -5,8 +5,8 @@
 %       Modified: 21 May 2020
 %       Modified: 22 May 2020
 %       Modified: 23 May 2020
-%       Modified: 18 Jul 2020 %Added comment@nCH--> nCmprsHlth
-%       Modified: 19 Jul 2020 %c‚Écompression health‚ğ‚©‚¯‚é‚æ‚¤‚ÉBi‚¢‚Ü‚Ü‚ÅAfrat‚ÉCompressionHealth‚ğ‚©‚¯‚Ä‚¢‚½j
+%       Modified: 18 Jul 2020 %Added commentã€€nCH--> nCmprsHlth
+%       Modified: 19 Jul 2020 %cã«compression healthã‚’ã‹ã‘ã‚‹ã‚ˆã†ã«ã€‚ï¼ˆã„ã¾ã¾ã§ã€fratã«CompressionHealthã‚’ã‹ã‘ã¦ã„ãŸï¼‰
 %       Modified:  24 Jul 2020  (IO function)
 %       Modified:  26 Jul 2020  (full debug)
 %       Modified:  23 Jan 2021 (Modification started)
@@ -44,17 +44,17 @@
 %                     HL4:  ISO7029 70yr female
 %                     HL5:  ISO7029 60yr male
 %                     HL6:  ISO7029 60yr female
-%                     HL7:  Example of otosclerosis@(textbook: Understanding audiogram p.47)
-%                     HL8:  Example of noise induced HL@(textbook: Understanding audiogram p.63)
+%                     HL7:  Example of otosclerosisã€€(textbook: Understanding audiogram p.47)
+%                     HL8:  Example of noise induced HLã€€(textbook: Understanding audiogram p.63)
 %     
 %
 % Note:  21 May 2020
-%             ‰¼’è:  pGC‚ÍNH‚Å‚àHI listener‚Å‚àí‚É“¯‚¶Bˆá‚¤‚Ì‚ÍHP-AF‚Ì‚Æ‚±‚ë‚Ì‚İB
+%             ä»®å®š:  pGCã¯NHã§ã‚‚HI listenerã§ã‚‚å¸¸ã«åŒã˜ã€‚é•ã†ã®ã¯HP-AFã®ã¨ã“ã‚ã®ã¿ã€‚
 %
 %
 function [GCparam] = GCFBv23_HearingLoss(GCparam,GCresp)
 
-[GCparam] = SetHearingLoss(GCparam); %‚±‚±‚ÅAHearing Loss‚Ìİ’è‚ğ‚µ‚Ä‚¢‚éB‰º‚ÉŠÖ”—L‚èB
+[GCparam] = SetHearingLoss(GCparam); %ã“ã“ã§ã€Hearing Lossã®è¨­å®šã‚’ã—ã¦ã„ã‚‹ã€‚ä¸‹ã«é–¢æ•°æœ‰ã‚Šã€‚
 if nargin < 2
     disp(['--- ' mfilename ': Setting default hearing loss parameter and return. ---'])
     return; 
@@ -62,71 +62,71 @@ end
 
 %%%%%%%%%%%%%%%%%%%%%%
 %% setting parameters of hearing loss %%%%
-GCparam.HLoss.CompressionHealth_InitVal = GCparam.HLoss.CompressionHealth;  %@‰Šú’l‚ğkeep
-% GCparam.HLoss.CompressionHealth‚Íaudiogram‚É‚æ‚è•ÏX‚ ‚è
+GCparam.HLoss.CompressionHealth_InitVal = GCparam.HLoss.CompressionHealth;  %ã€€åˆæœŸå€¤ã‚’keep
+% GCparam.HLoss.CompressionHealthã¯audiogramã«ã‚ˆã‚Šå¤‰æ›´ã‚ã‚Š
 
-% Table‚ğg‚í‚¸‚ÉZo
+% Tableã‚’ä½¿ã‚ãšã«ç®—å‡º
 LenFag = length(GCparam.HLoss.FaudgramList);
 for nFag = 1:LenFag
     Fr1query = GCparam.HLoss.FaudgramList(nFag);
-    HL0_PinCochleadB(nFag) = HL2PinCochlea(Fr1query,0);  % cochlear Input Level ‚É•ÏŠ·B@Compensation of MidEar Trans. Func.
+    HL0_PinCochleadB(nFag) = HL2PinCochlea(Fr1query,0);  % cochlear Input Level ã«å¤‰æ›ã€‚ã€€Compensation of MidEar Trans. Func.
     CompressionHealth    = GCparam.HLoss.CompressionHealth(nFag);
     [dummy, HL0_IOfuncdB_CH1] = GCFBv23_AsymFuncInOut(GCparam,GCresp,Fr1query,1,HL0_PinCochleadB(nFag));
     PindB_ACTreduction                = GCFBv23_AsymFuncInOut_InvIOfunc(GCparam,GCresp,Fr1query,CompressionHealth,HL0_IOfuncdB_CH1);
     
-    PinLossdB_ACT(nFag)  =  PindB_ACTreduction - HL0_PinCochleadB(nFag);   % HLossdB‚Í³‚Ì”
+    PinLossdB_ACT(nFag)  =  PindB_ACTreduction - HL0_PinCochleadB(nFag);   % HLossdBã¯æ­£ã®æ•°
     PinLossdB_ACT_Init(nFag)  = PinLossdB_ACT(nFag);   % inital value of ACT Loss
-    PinLossdB_PAS(nFag)    = max(GCparam.HLoss.HearingLeveldB(nFag) - PinLossdB_ACT(nFag),0);  % Boundary setting 0ˆÈ‰º‚É‚È‚ç‚È‚¢
+    PinLossdB_PAS(nFag)    = max(GCparam.HLoss.HearingLeveldB(nFag) - PinLossdB_ACT(nFag),0);  % Boundary setting 0ä»¥ä¸‹ã«ãªã‚‰ãªã„
     
-    % NHˆÈŠO‚ÅA‰ºŒÀ‚É‚ ‚½‚Á‚½ê‡AACT‚ÌPinLossdB_ACT‚ğÄŒvZB
+    % NHä»¥å¤–ã§ã€ä¸‹é™ã«ã‚ãŸã£ãŸå ´åˆã€ACTã®PinLossdB_ACTã‚’å†è¨ˆç®—ã€‚
     % if PinLossdB_PAS(nFag) == 0  %  && GCparam.HLoss.HearingLeveldB(nFag) > 0
     % Note: 8 Sep 22
-    % NH‚É‹ß‚¢A‚±‚ê‚àğŒ‚Æ‚µ‚ÄA•s“s‡BPinLossdB_PAS(nFag) ‚ª0‚Å‚Í‚È‚­A+eps*100‚É‚È‚é‚±‚Æ‚à‚ ‚èB
-    % —á‚¦‚ÎA•’Ês‚í‚È‚¢‚ªAHL0 [0 0 0 0 0 0 0]‚ÅACompressionHealth= 0.5‚Æ‚µ‚Ä‚¢‚½‚çA1.0‚É•â³‚·‚é•K—v‚ ‚èB
+    % NHã«è¿‘ã„æ™‚ã€ã“ã‚Œã‚‚æ¡ä»¶ã¨ã—ã¦ã€ä¸éƒ½åˆã€‚PinLossdB_PAS(nFag) ãŒ0ã§ã¯ãªãã€+eps*100ã«ãªã‚‹ã“ã¨ã‚‚ã‚ã‚Šã€‚
+    % ä¾‹ãˆã°ã€æ™®é€šè¡Œã‚ãªã„ãŒã€HL0 [0 0 0 0 0 0 0]ã§ã€CompressionHealth= 0.5ã¨ã—ã¦ã„ãŸã‚‰ã€1.0ã«è£œæ­£ã™ã‚‹å¿…è¦ã‚ã‚Šã€‚
 
-    if PinLossdB_PAS(nFag) < eps*10^4     % ‚à‚µ•â³‚³‚ê‚Ä‚¢‚½‚çA‘S”Ê‚É•ÏXB
-        PinLossdB_ACT(nFag)  = GCparam.HLoss.HearingLeveldB(nFag) - PinLossdB_PAS(nFag);      % PinLossdB_ACT‘¤‚à•â³
+    if PinLossdB_PAS(nFag) < eps*10^4     % ã‚‚ã—è£œæ­£ã•ã‚Œã¦ã„ãŸã‚‰ã€å…¨èˆ¬ã«å¤‰æ›´ã€‚
+        PinLossdB_ACT(nFag)  = GCparam.HLoss.HearingLeveldB(nFag) - PinLossdB_PAS(nFag);      % PinLossdB_ACTå´ã‚‚è£œæ­£
         CmprsHlthList = [1:-0.1:0];
-        for nCH = 1:length(CmprsHlthList)  % ‚X11“_F elps 0.025 sec–¢– -- –â‘è‚È‚µB
+        for nCH = 1:length(CmprsHlthList)  % é«˜ã€…11ç‚¹ï¼š elps 0.025 secæœªæº€ -- å•é¡Œãªã—ã€‚
             CmprsHlth = CmprsHlthList(nCH);
             PindB_CmprsHlthVal_Inv = GCFBv23_AsymFuncInOut_InvIOfunc(GCparam,GCresp,Fr1query,CmprsHlth,HL0_IOfuncdB_CH1);
             PinLossdB_ACT4Cmpnst(nCH) = PindB_CmprsHlthVal_Inv - HL0_PinCochleadB(nFag);
         end
         % CompressionHealth = interp1(PinLossdB_ACT4Cmpnst,CmprsHlthList, PinLossdB_ACT(nFag));
-        % % NaN‚ªo‚Ä‚µ‚Ü‚Á‚Äerror‚É‚È‚éB debugged 8 Sep 2022
-        CompressionHealth = interp1(PinLossdB_ACT4Cmpnst,CmprsHlthList, PinLossdB_ACT(nFag),'linear','extrap'); % Å‚à‹ß‚¢‚à‚Ì‚ğ’T‚·-- •â³‚µ‚½’l
+        % % NaNãŒå‡ºã¦ã—ã¾ã£ã¦errorã«ãªã‚‹ã€‚ debugged 8 Sep 2022
+        CompressionHealth = interp1(PinLossdB_ACT4Cmpnst,CmprsHlthList, PinLossdB_ACT(nFag),'linear','extrap'); % æœ€ã‚‚è¿‘ã„ã‚‚ã®ã‚’æ¢ã™-- è£œæ­£ã—ãŸå€¤
         if isnan(CompressionHealth) == 1
-           % CompressionHealth = 0;  % NaN‚É‚È‚Á‚½‚ç0‚Æ‚µ‚Ä‚µ‚Ü‚¤B--- > ‚±‚ê‚ªƒoƒO‚Ì‚à‚Æ.@'linear','extrap'‚Åo‚È‚¢‚æ‚¤‚É‚µ‚½B
+           % CompressionHealth = 0;  % NaNã«ãªã£ãŸã‚‰0ã¨ã—ã¦ã—ã¾ã†ã€‚--- > ã“ã‚ŒãŒãƒã‚°ã®ã‚‚ã¨.ã€€'linear','extrap'ã§å‡ºãªã„ã‚ˆã†ã«ã—ãŸã€‚
            error('Error in CompressionHealth recalculation'); % --> error
         end   
         PindB_ACTreduction     =  GCFBv23_AsymFuncInOut_InvIOfunc(GCparam,GCresp,Fr1query,CompressionHealth,HL0_IOfuncdB_CH1);
-        PinLossdB_ACT(nFag)   = PindB_ACTreduction - HL0_PinCochleadB(nFag);   % HLossdB‚Í³‚Ì”
-        PinLossdB_PAS(nFag)   = GCparam.HLoss.HearingLeveldB(nFag) - PinLossdB_ACT(nFag);  % 0ˆÈ‰º‚Å‚à-0.3dB ’ö“x‚Ì‚¸‚ê‚ ‚èB‘½­‚¸‚ê‚Ä‚à‚©‚Ü‚í‚È‚¢
-        if abs(GCparam.HLoss.CompressionHealth_InitVal(nFag) - CompressionHealth) > eps   % Œë·‚ª‘å‚«‚¢‚Ì‚İ•\¦B19 Oct 22
+        PinLossdB_ACT(nFag)   = PindB_ACTreduction - HL0_PinCochleadB(nFag);   % HLossdBã¯æ­£ã®æ•°
+        PinLossdB_PAS(nFag)   = GCparam.HLoss.HearingLeveldB(nFag) - PinLossdB_ACT(nFag);  % 0ä»¥ä¸‹ã§ã‚‚-0.3dB ç¨‹åº¦ã®ãšã‚Œã‚ã‚Šã€‚å¤šå°‘ãšã‚Œã¦ã‚‚ã‹ã¾ã‚ãªã„
+        if abs(GCparam.HLoss.CompressionHealth_InitVal(nFag) - CompressionHealth) > eps   % èª¤å·®ãŒå¤§ãã„æ™‚ã®ã¿è¡¨ç¤ºã€‚19 Oct 22
             disp(['Compenstated GCparam.HLoss.CompressionHealth ( ' int2str(Fr1query) ' Hz ) : '  ...
                 num2str(GCparam.HLoss.CompressionHealth_InitVal(nFag)) ' --> ' num2str(CompressionHealth) ]);
         end
     end
     
-    % ‚±‚ê‚ª0‚É‚È‚ç‚È‚¢‚±‚Æ‚Í‚È‚¢‚ªAdebug—p‚É’u‚¢‚Ä‚¨‚­
+    % ã“ã‚ŒãŒ0ã«ãªã‚‰ãªã„ã“ã¨ã¯ãªã„ãŒã€debugç”¨ã«ç½®ã„ã¦ãŠã
     ErrorACTPAS = GCparam.HLoss.HearingLeveldB(nFag) -  (PinLossdB_PAS(nFag) + PinLossdB_ACT(nFag));
     if  abs(ErrorACTPAS) > eps*100 
        disp([ErrorACTPAS, GCparam.HLoss.HearingLeveldB(nFag), PinLossdB_ACT(nFag),  PinLossdB_PAS(nFag)])
-       if  strncmp(GCparam.HLoss.Type,'NH',2) == 0 % 'NH'‚Ì‚¾‚¯error‚ğo‚³‚È‚¢‚æ‚¤‚ÉB
+       if  strncmp(GCparam.HLoss.Type,'NH',2) == 0 % 'NH'ã®æ™‚ã ã‘errorã‚’å‡ºã•ãªã„ã‚ˆã†ã«ã€‚
             error('Error in HL_total = HL_ACT + HL_PAS');
         end
     end
     
-    GCparam.HLoss.CompressionHealth(nFag) = CompressionHealth; % ÅI’l‚É“ü‚ê‘Ö‚¦‚é
-    %@‘S‘Ì‚Ìgain control@--- AsymFunction‚ÌÅ‘å’l‚©‚çŒvZ
-    HLval_PinCochleadB(nFag) = HL2PinCochlea(Fr1query,0)+GCparam.HLoss.HearingLeveldB(nFag);  % cochlear Input Level ‚É•ÏŠ·B@Compensation of MidEar Trans. Func.
+    GCparam.HLoss.CompressionHealth(nFag) = CompressionHealth; % æœ€çµ‚å€¤ã«å…¥ã‚Œæ›¿ãˆã‚‹
+    %ã€€å…¨ä½“ã®gain controlã€€--- AsymFunctionã®æœ€å¤§å€¤ã‹ã‚‰è¨ˆç®—
+    HLval_PinCochleadB(nFag) = HL2PinCochlea(Fr1query,0)+GCparam.HLoss.HearingLeveldB(nFag);  % cochlear Input Level ã«å¤‰æ›ã€‚ã€€Compensation of MidEar Trans. Func.
     [~, HLval_IOfuncdB_CHval] = GCFBv23_AsymFuncInOut(GCparam,GCresp,Fr1query,CompressionHealth,HLval_PinCochleadB(nFag));
     GCparam.HLoss.AFgainCmpnstdB(nFag) = HLval_IOfuncdB_CHval;
     
 end
 
-%@g—p‚µ‚È‚¢F@NHgainCmpnstBiasdB = [3.5, -1.3, -3, -3, -4, -3, -3] %NH‚ÅHL0dB‚É‡‚í‚¹‚é‚½‚ß‚Ì•â³’lBƒAƒhƒzƒbƒN
-NHgainCmpnstBiasdB = [0, 0, 0, 0, 0, 0, 0];  %•â³’l‚Í–³‚¢•û‚ª—Ç‚¢‚±‚Æ‚ª‚í‚©‚Á‚½B2021/10/8
+%ã€€ä½¿ç”¨ã—ãªã„ï¼šã€€NHgainCmpnstBiasdB = [3.5, -1.3, -3, -3, -4, -3, -3] %NHã§HL0dBã«åˆã‚ã›ã‚‹ãŸã‚ã®è£œæ­£å€¤ã€‚ã‚¢ãƒ‰ãƒ›ãƒƒã‚¯
+NHgainCmpnstBiasdB = [0, 0, 0, 0, 0, 0, 0];  %è£œæ­£å€¤ã¯ç„¡ã„æ–¹ãŒè‰¯ã„ã“ã¨ãŒã‚ã‹ã£ãŸã€‚2021/10/8
 GCparam.HLoss.AFgainCmpnstdB     = GCparam.HLoss.AFgainCmpnstdB + NHgainCmpnstBiasdB;  
 GCparam.HLoss.HLval_PinCochleadB = HLval_PinCochleadB; % renamed from HLval_SPLdB  17 Aug 2021
 GCparam.HLoss.PinLossdB_ACT      = PinLossdB_ACT;
@@ -136,7 +136,7 @@ GCparam.HLoss.PinLossdB_ACT_Init = PinLossdB_ACT_Init;
 
 % interporation to GCresp.Fr1 (which is closer to Fp2)
 [ERBrateFag] = Freq2ERB(GCparam.HLoss.FaudgramList);
-[ERBrateFr1] = Freq2ERB(GCresp.Fr1); % GC channel•ª
+[ERBrateFr1] = Freq2ERB(GCresp.Fr1); % GC channelåˆ†
 GCparam.HLoss.FB_Fr1 = GCresp.Fr1;
 GCparam.HLoss.FB_HearingLeveldB     = interp1(ERBrateFag,GCparam.HLoss.HearingLeveldB, ERBrateFr1,'linear','extrap');
 GCparam.HLoss.FB_HLval_PinCochleadB = interp1(ERBrateFag,GCparam.HLoss.HLval_PinCochleadB, ERBrateFr1,'linear','extrap');
@@ -146,14 +146,14 @@ GCparam.HLoss.FB_CompressionHealth  = min(max(interp1(ERBrateFag,GCparam.HLoss.C
 GCparam.HLoss.FB_AFgainCmpnstdB     = interp1(ERBrateFag,GCparam.HLoss.AFgainCmpnstdB, ERBrateFr1,'linear','extrap');
 
 %% %%%%%%%%%%%
-%  Debug—p@plot
+%  Debugç”¨ã€€plot
 %%%%%%%%%%%%%
 %SwPlot = 1;
 SwPlot = 0;
 if SwPlot == 1
     close all
-    % ‚È‚ºAGCparam.HLoss.FB_PinLossdB_PAS‚ÆGCparam.HLoss.FB_PinLossdB_PAS_GainReduct‚ª“¯‚¶H
-    % ‚È‚ºA‚Q‚Â‚ğ•ª‚¯‚½‚©•s–¾B@@23 Jan 2021
+    % ãªãœã€GCparam.HLoss.FB_PinLossdB_PASã¨GCparam.HLoss.FB_PinLossdB_PAS_GainReductãŒåŒã˜ï¼Ÿ
+    % ãªãœã€ï¼’ã¤ã‚’åˆ†ã‘ãŸã‹ä¸æ˜ã€‚ã€€ã€€23 Jan 2021
     % plot(ERBrateFr1,GCparam.HLoss.FB_PinLossdB_PAS,'--' ,ERBrateFr1, GCparam.HLoss.FB_PinLossdB_PAS_GainReduct,'-.', ...
     %       ERBrateFr1, GCparam.HLoss.FB_PinLossdB_ACT  , ERBrateFr1,GCparam.HLoss.FB_PinLossdB_ACT_GainReduct);
     plot(ERBrateFr1,GCparam.HLoss.FB_PinLossdB_PAS,'--' , ...
@@ -164,7 +164,7 @@ if SwPlot == 1
     text(3,-2,num2str(GCparam.HLoss.CompressionHealth))
     
     HLcomposition =     [GCparam.HLoss.HearingLeveldB; GCparam.HLoss.PinLossdB_PAS; GCparam.HLoss.PinLossdB_ACT];
-    % ˆÈ‰º‚Ì’l‚ª‚O‚Å‚ ‚é‚±‚Æ‚ª•K{  --- ‚©‚È‚ç‚¸‚È‚Á‚Ä‚¢‚é‹C‚ª‚·‚é‚ªAAA
+    % ä»¥ä¸‹ã®å€¤ãŒï¼ã§ã‚ã‚‹ã“ã¨ãŒå¿…é ˆ  --- ã‹ãªã‚‰ãšãªã£ã¦ã„ã‚‹æ°—ãŒã™ã‚‹ãŒã€ã€ã€
     DiffHL = GCparam.HLoss.HearingLeveldB - (  GCparam.HLoss.PinLossdB_PAS+GCparam.HLoss.PinLossdB_ACT);
     if abs(DiffHL) >  100*eps
         error('Something wrong here');
@@ -178,7 +178,7 @@ end
 
 
 %% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   ŠÖ”
+%   é–¢æ•°
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
@@ -198,10 +198,10 @@ if length(GCparam.HLoss.Type) < 1 || strncmp(GCparam.HLoss.Type,'NH',2) == 1
     GCparam.HLoss.PinLossdB_ACT       = zeros(1,LenFag);
     GCparam.HLoss.PinLossdB_PAS       = zeros(1,LenFag);
     GCparam.HLoss.IOfuncLossdB_PAS    = zeros(1,LenFag);
-    if isfield(GCparam.HLoss,'CompressionHealth') == 0  % ŠO‚Å—^‚¦‚ç‚ê‚Ä‚¢‚È‚¢‚¾‚¯1‚É‚·‚é
+    if isfield(GCparam.HLoss,'CompressionHealth') == 0  % å¤–ã§ä¸ãˆã‚‰ã‚Œã¦ã„ãªã„æ™‚ã ã‘1ã«ã™ã‚‹
         GCparam.HLoss.CompressionHealth = ones(1,LenFag);
     end
-    % debug GCparam.NumCh‚Ìw’è‚ª•K—v‚¾‚ªA‚±‚±‚ÅŒvZ‚·‚é•K—v‚È‚µF@‹¤’Ê‚ÅŒvZ‚³‚ê‚éB15 Oct 2024
+    % debug GCparam.NumChã®æŒ‡å®šãŒå¿…è¦ã ãŒã€ã“ã“ã§è¨ˆç®—ã™ã‚‹å¿…è¦ãªã—ï¼šã€€å…±é€šã§è¨ˆç®—ã•ã‚Œã‚‹ã€‚15 Oct 2024
     % GCparam.HLoss.FB_PinLossdB_ACT     = zeros(GCparam.NumCh,1);
     % GCparam.HLoss.FB_PinLossdB_PAS     = zeros(GCparam.NumCh,1);
     % GCparam.HLoss.FB_IOfuncLossdB_PAS  = zeros(GCparam.NumCh,1);
@@ -212,38 +212,38 @@ elseif strncmp(GCparam.HLoss.Type,'HL',2) == 1 % HL
         GCparam.HLoss.CompressionHealth = 0.5*ones(1,LenFag); % default 50%
     end
     
-    NumHL = str2num(GCparam.HLoss.Type(3:min(4,end)));   %HL+2Œ…‚Ìê‡ (‘İ‘Î‰)
-    if length(NumHL) < 1, NumHL = str2num(GCparam.HLoss.Type(3)); end   %HL+1Œ…‚Ìê‡
+    NumHL = str2num(GCparam.HLoss.Type(3:min(4,end)));   %HL+2æ¡ã®å ´åˆ (å¢—è¨­å¯¾å¿œ)
+    if length(NumHL) < 1, NumHL = str2num(GCparam.HLoss.Type(3)); end   %HL+1æ¡ã®å ´åˆ
     GCparam.HLoss.SwType = NumHL;  % 'HL0','HL1','HL2', ...'HL7'... 'HL10', 'HL11' ....
     
     %    Note:
-    %    See HIsimFastGC_InitParamHI.m for the source --  ”Ô†‚ğˆê’v‚³‚¹‚é
-    %     9  ‚Ì   manual set  ‚¾‚¯‚ÍA¡Œã‚Ì extention‚àl‚¦A 0 ”Ô‚É
+    %    See HIsimFastGC_InitParamHI.m for the source --  ç•ªå·ã‚’ä¸€è‡´ã•ã›ã‚‹
+    %     9  ã®   manual set  ã ã‘ã¯ã€ä»Šå¾Œã® extentionã‚‚è€ƒãˆã€ 0 ç•ªã«
     %     ParamHI.AudiogramNum : audiogram select
-    %                 0.manual input@è“®“ü—Í@ <--> 9”Ô‚©‚ç
+    %                 0.manual inputã€€æ‰‹å‹•å…¥åŠ›ã€€ <--> 9ç•ªã‹ã‚‰
     %                 1.example 1
-    %                 2.—§–Ø2002 80yr
-    %                 3.ISO7029 70yr ’j
-    %                 4.ISO7029 70yr —
-    %                 5.ISO7029 60yr ’j
-    %                 6.ISO7029 60yr —
-    %                 7.¨d‰»Ç(‚æ‚­‚í‚©‚éƒI[ƒWƒIƒOƒ‰ƒ€p.47)
-    %                 8.‘›‰¹«“ï’®(‚æ‚­‚í‚©‚éƒI[ƒWƒIƒOƒ‰ƒ€p.63)
+    %                 2.ç«‹æœ¨2002 80yr
+    %                 3.ISO7029 70yr ç”·
+    %                 4.ISO7029 70yr å¥³
+    %                 5.ISO7029 60yr ç”·
+    %                 6.ISO7029 60yr å¥³
+    %                 7.è€³ç¡¬åŒ–ç—‡(ã‚ˆãã‚ã‹ã‚‹ã‚ªãƒ¼ã‚¸ã‚ªã‚°ãƒ©ãƒ p.47)
+    %                 8.é¨’éŸ³æ€§é›£è´(ã‚ˆãã‚ã‹ã‚‹ã‚ªãƒ¼ã‚¸ã‚ªã‚°ãƒ©ãƒ p.63)
     %
     
     if GCparam.HLoss.SwType == 0
         GCparam.HLoss.Type='HLval_ManualSet';
-        %‚±‚±‚Å‚ÍAdefault’l‚ğ“ü‚ê‚¸‚ÉAŠO•”‚©‚ç‚Ìİ’è‚ª–³‚¢ê‡‚É‚Íerror
+        %ã“ã“ã§ã¯ã€defaultå€¤ã‚’å…¥ã‚Œãšã«ã€å¤–éƒ¨ã‹ã‚‰ã®è¨­å®šãŒç„¡ã„å ´åˆã«ã¯error
         LenHL = length(GCparam.HLoss.HearingLeveldB);
         if  LenHL < length(GCparam.HLoss.FaudgramList),
             error('Set GCparam.HLoss.HearingLeveldB at FaudgramList in advance.');
         end
-       % if (mean(GCparam.HLoss.HearingLeveldB) < 10*eps)  % İ’è‚ªNH‚©‚Ç‚¤‚©. warning‚¾‚¯o‚·
+       % if (mean(GCparam.HLoss.HearingLeveldB) < 10*eps)  % è¨­å®šãŒNHã‹ã©ã†ã‹. warningã ã‘å‡ºã™
        %     warning('mean(GCparam.HLoss.HearingLeveldB) nearly equal 0 --- NH?')
        % end
         if length(find(GCparam.HLoss.HearingLeveldB < 0)) > 0
             error('GCparam.HLoss.HearingLeveldB must not be negative.');
-            %@Compression health‚ÌŒvZ‚ª‚â‚â‚±‚µ‚­‚È‚é‚Ì‚ÅAHL>0‚É§ŒÀ‚·‚éB 8 Oct 2022
+            %ã€€Compression healthã®è¨ˆç®—ãŒã‚„ã‚„ã“ã—ããªã‚‹ã®ã§ã€HL>0ã«åˆ¶é™ã™ã‚‹ã€‚ 8 Oct 2022
         end
     elseif GCparam.HLoss.SwType == 1   % Preset examples
         GCparam.HLoss.Type='HL1_Example';
@@ -267,10 +267,10 @@ elseif strncmp(GCparam.HLoss.Type,'HL',2) == 1 % HL
         GCparam.HLoss.HearingLeveldB = [ 5  5  6  7 11 16 26];
     elseif GCparam.HLoss.SwType == 7
         GCparam.HLoss.Type='HL7_Example_Otosclerosis';
-        GCparam.HLoss.HearingLeveldB = [  50 55 50 50 40 25 20 ]; % otosclerosis ¨d‰»Ç(‚æ‚­‚í‚©‚éƒI[ƒWƒIƒOƒ‰ƒ€p.47)
+        GCparam.HLoss.HearingLeveldB = [  50 55 50 50 40 25 20 ]; % otosclerosis è€³ç¡¬åŒ–ç—‡(ã‚ˆãã‚ã‹ã‚‹ã‚ªãƒ¼ã‚¸ã‚ªã‚°ãƒ©ãƒ p.47)
     elseif GCparam.HLoss.SwType == 8
         GCparam.HLoss.Type='HL8_Example_NoiseInduced';
-        GCparam.HLoss.HearingLeveldB = [  15 10 15 10 10 40 20 ]; % otosclerosis %‘›‰¹«“ï’®(‚æ‚­‚í‚©‚éƒI[ƒWƒIƒOƒ‰ƒ€p.63)
+        GCparam.HLoss.HearingLeveldB = [  15 10 15 10 10 40 20 ]; % otosclerosis %é¨’éŸ³æ€§é›£è´(ã‚ˆãã‚ã‹ã‚‹ã‚ªãƒ¼ã‚¸ã‚ªã‚°ãƒ©ãƒ p.63)
     else
         error('Specify GCparam.HLoss.Type (HL0, HL1, HL2, ....) properly.');
     end

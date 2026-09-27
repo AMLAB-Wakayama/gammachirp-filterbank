@@ -3,14 +3,14 @@
 %       IRINO, T.
 %       Created:  11 Feb 2021 from CmpnstERBfilt (in ERBtool)
 %       Modified:  11 Feb 2021
-%       Modified:  13 Feb 2021 % NumCmpnst C³ (+1‚ğœ‚¢‚½)
-%       Modified:  27 Feb 2021 % Frame base‚Å‚àSample base‚Å‚àg‚¦‚é‚æ‚¤‚ÉB
+%       Modified:  13 Feb 2021 % NumCmpnst ä¿®æ­£ (+1ã‚’é™¤ã„ãŸ)
+%       Modified:  27 Feb 2021 % Frame baseã§ã‚‚Sample baseã§ã‚‚ä½¿ãˆã‚‹ã‚ˆã†ã«ã€‚
 %       Modified:   6  Mar 2022  v232  rename of GCFBv231_func -->  GCFBv23_func 
 %
 % Note:
-%       sample-by-sample‚¾‚ÆACmpnstERBFilt.m‚Ås‚Á‚Ä‚¢‚½B
-%       frame-base‚¾‚Æframe‚ÌƒTƒ“ƒvƒŠƒ“ƒOü”g”‚ªˆá‚¤‚Ì‚Åê—p‚ÉŠJ”­
-%       GCFBˆ—‘S‘Ì‚ÌŠÔ’x‚ê‚àŠ¨ˆÄ@pulseŒn—ñ‚Æ‚ÌŠÔ’x‚ê‚ğ•â³
+%       sample-by-sampleã ã¨ã€CmpnstERBFilt.mã§è¡Œã£ã¦ã„ãŸã€‚
+%       frame-baseã ã¨frameã®ã‚µãƒ³ãƒ—ãƒªãƒ³ã‚°å‘¨æ³¢æ•°ãŒé•ã†ã®ã§å°‚ç”¨ã«é–‹ç™º
+%       GCFBå‡¦ç†å…¨ä½“ã®æ™‚é–“é…ã‚Œã‚‚å‹˜æ¡ˆã€€pulseç³»åˆ—ã¨ã®æ™‚é–“é…ã‚Œã‚’è£œæ­£
 %
 %
 function [GCcmpnst, DCparam]  = GCFBv23_DelayCmpnst(GCval,GCparam,DCparam)
@@ -18,17 +18,17 @@ function [GCcmpnst, DCparam]  = GCFBv23_DelayCmpnst(GCval,GCparam,DCparam)
 disp('*** GC filter delay compensation ***');
 if isfield(DCparam,'fs') == 0
     error('Specify sampling frequency (fs) of  input GCval. ');
-    %  ‚±‚ê‚ÅAFrame base‚Å‚àSample-base‚Å‚à‘Î‰‰Â”\
+    %  ã“ã‚Œã§ã€Frame baseã§ã‚‚Sample-baseã§ã‚‚å¯¾å¿œå¯èƒ½
 end;
 
-% Delay ‚Ìƒpƒ‰ƒ[ƒ^FtuningŒã‚±‚Ì’l‚É‚µ‚½B’Êí‚Í•ÏX‚µ‚È‚¢•û‚ª—Ç‚¢‚ªAˆê‰ŠO•”§Œä‚à‰Â”\‚ÉB
-if nargin <= 2 || isfield(DCparam,'TdelayFilt1kHz') == 0  % default’l‚ğ‚¢‚ê‚éB
+% Delay ã®ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ï¼štuningå¾Œã“ã®å€¤ã«ã—ãŸã€‚é€šå¸¸ã¯å¤‰æ›´ã—ãªã„æ–¹ãŒè‰¯ã„ãŒã€ä¸€å¿œå¤–éƒ¨åˆ¶å¾¡ã‚‚å¯èƒ½ã«ã€‚
+if nargin <= 2 || isfield(DCparam,'TdelayFilt1kHz') == 0  % defaultå€¤ã‚’ã„ã‚Œã‚‹ã€‚
     DCparam.TdelayFilt1kHz =0.002;  % default 2 ms @ 1 kHz
 end
-if isfield(DCparam,'TdelayFB') == 0  % default’l‚ğ‚¢‚ê‚éB
-    DCparam.TdelayFB    = 0; %  GCFB‘S‘Ì‚Ìdelay:  default 0 ms
-    %%% NG    DCparam.TdelayFB    = 0.002; %  GCFB‘S‘Ì‚Ìdelay:  default 2 ms
-    %%% Å‰‚±‚¤‚µ‚Ä‚¢‚½‚ªAGCFB‚Ì’†‚Å•Â‚¶‚Ä‚¢‚é‚È‚ç•s—vB
+if isfield(DCparam,'TdelayFB') == 0  % defaultå€¤ã‚’ã„ã‚Œã‚‹ã€‚
+    DCparam.TdelayFB    = 0; %  GCFBå…¨ä½“ã®delay:  default 0 ms
+    %%% NG    DCparam.TdelayFB    = 0.002; %  GCFBå…¨ä½“ã®delay:  default 2 ms
+    %%% æœ€åˆã“ã†ã—ã¦ã„ãŸãŒã€GCFBã®ä¸­ã§é–‰ã˜ã¦ã„ã‚‹ãªã‚‰ä¸è¦ã€‚
 end
 if DCparam.TdelayFilt1kHz < 0 ||  DCparam.TdelayFB< 0
     error('Negative delay compensation is not allowed.');
@@ -53,5 +53,5 @@ end
 
 return
 
-%     NumCmpnst =  fix(NumDelayFilt1kHz * 1000/GCparam.Fr1(nch)); % GCFBv230_SetParam‚ÅGCparam.Fr1‚Íset‚³‚ê‚Ä‚¢‚é
+%     NumCmpnst =  fix(NumDelayFilt1kHz * 1000/GCparam.Fr1(nch)); % GCFBv230_SetParamã§GCparam.Fr1ã¯setã•ã‚Œã¦ã„ã‚‹
 

@@ -25,8 +25,8 @@
 %       Modified:  26 Jul 2020  (v230, modified some comments)
 %       Modified:  25 Jan 2021 (v230, No 'sta[tic]'=='fix[ed]'  allowed anymore )
 %       Modified:  11 Feb 2021 (v230, GCparam.Fr1 = Fr1(:);)
-%       Modified:  28 Feb 2021 (v230, GCparam.Ctrl = 'dynamic'; default@)
-%       Modified:  13 Aug 2021 (v230, error('GCFB may not work when max(FreqRange)*3 > fs. --- Set fs properly.');@)
+%       Modified:  28 Feb 2021 (v230, GCparam.Ctrl = 'dynamic'; defaultã€€)
+%       Modified:  13 Aug 2021 (v230, error('GCFB may not work when max(FreqRange)*3 > fs. --- Set fs properly.');ã€€)
 %       Modified:  28 Aug 2021  v231, no change in function
 %       Modified:   6  Mar 2022  v232  rename of GCFBv231_func -->  GCFBv23_func 
 %       Modified:  20 Mar 2022  v233 introduction of GCFBv23x
@@ -206,7 +206,7 @@ if isfield(GCparam.LvlEst,'RMStoSPLdB')==0, GCparam.LvlEst.RMStoSPLdB=[]; end
 if length(GCparam.LvlEst.RMStoSPLdB) == 0
     GCparam.LvlEst.RMStoSPLdB = 30;   %  1 rms == 30 dB SPL for Meddis HC level
     GCparam.MeddisHCLevel_RMS0dB_SPLdB = 30;   %  1 rms == 30 dB SPL for Meddis HC level
-    % ‚í‚©‚è‚â‚·‚¢–¼‘O‚ÉB17 Aug 21 -- ‚Ç‚¿‚ç‚à“¯—l‚Ég‚¦‚éB
+    % ã‚ã‹ã‚Šã‚„ã™ã„åå‰ã«ã€‚17 Aug 21 -- ã©ã¡ã‚‰ã‚‚åŒæ§˜ã«ä½¿ãˆã‚‹ã€‚
 end
 
 if isfield(GCparam.LvlEst,'Weight')==0, GCparam.LvlEst.Weight=[]; end
@@ -243,15 +243,15 @@ if length(GCparam.DynHPAF.StrPrc) < 1
 end
 
 if strncmp(GCparam.DynHPAF.StrPrc,'frame',5) == 1    % 16 May 2020
-      GCparam.DynHPAF.Tframe  = 0.001;  % 1ms   <-- 5 ms‚æ‚è‚à—Ç‚¢
-      % Not Use:   GCparam.DynHPAF.Tframe  = 0.0005;  % 1ms‚Æ•Ï‚í‚ç‚È‚¢BˆÀ’è‚Ì‚½‚ß1msÌ—pB
-      GCparam.DynHPAF.Tshift    = 0.0005;  % 0.5ms   fs = 2000;  <-- 1 ms‚æ‚è‚à¸“x‚‚¢
-      % Not Use:  GCparam.DynHPAF.Tshift    = 0.00025;  %  0.5ms‚Æ•Ï‚í‚ç‚È‚¢BƒTƒ“ƒvƒŠƒ“ƒOü”g”4000Hz
-      GCparam.DynHPAF.LenFrame  = fix(GCparam.DynHPAF.Tframe*GCparam.fs);  % ®”‚É: 44.1kHz‚Ì¢‚é‚Ì‚Å
-      GCparam.DynHPAF.LenShift    = fix(GCparam.DynHPAF.Tshift*GCparam.fs); % ®”‚É
-      GCparam.DynHPAF.Tframe      = GCparam.DynHPAF.LenFrame/GCparam.fs;      % ®”‚©‚çŒvZ‚µ‚È‚¨‚µB
-      GCparam.DynHPAF.Tshift         = GCparam.DynHPAF.LenShift/GCparam.fs;        % ®”‚©‚çŒvZ‚µ‚È‚¨‚µB
-      GCparam.DynHPAF.fs              = 1/GCparam.DynHPAF.Tshift;  % ƒTƒ“ƒvƒŠƒ“ƒOü”g”
+      GCparam.DynHPAF.Tframe  = 0.001;  % 1ms   <-- 5 msã‚ˆã‚Šã‚‚è‰¯ã„
+      % Not Use:   GCparam.DynHPAF.Tframe  = 0.0005;  % 1msã¨å¤‰ã‚ã‚‰ãªã„ã€‚å®‰å®šã®ãŸã‚1msæ¡ç”¨ã€‚
+      GCparam.DynHPAF.Tshift    = 0.0005;  % 0.5ms   fs = 2000;  <-- 1 msã‚ˆã‚Šã‚‚ç²¾åº¦é«˜ã„
+      % Not Use:  GCparam.DynHPAF.Tshift    = 0.00025;  %  0.5msã¨å¤‰ã‚ã‚‰ãªã„ã€‚ã‚µãƒ³ãƒ—ãƒªãƒ³ã‚°å‘¨æ³¢æ•°4000Hz
+      GCparam.DynHPAF.LenFrame  = fix(GCparam.DynHPAF.Tframe*GCparam.fs);  % æ•´æ•°ã«: 44.1kHzã®æ™‚å›°ã‚‹ã®ã§
+      GCparam.DynHPAF.LenShift    = fix(GCparam.DynHPAF.Tshift*GCparam.fs); % æ•´æ•°ã«
+      GCparam.DynHPAF.Tframe      = GCparam.DynHPAF.LenFrame/GCparam.fs;      % æ•´æ•°ã‹ã‚‰è¨ˆç®—ã—ãªãŠã—ã€‚
+      GCparam.DynHPAF.Tshift         = GCparam.DynHPAF.LenShift/GCparam.fs;        % æ•´æ•°ã‹ã‚‰è¨ˆç®—ã—ãªãŠã—ã€‚
+      GCparam.DynHPAF.fs              = 1/GCparam.DynHPAF.Tshift;  % ã‚µãƒ³ãƒ—ãƒªãƒ³ã‚°å‘¨æ³¢æ•°
       GCparam.DynHPAF.NameWin  = 'hanning';
       StrWinFunc = [GCparam.DynHPAF.NameWin '(' int2str(GCparam.DynHPAF.LenFrame) ')'];
       GCparam.DynHPAF.ValWin      = eval(StrWinFunc);     
@@ -265,7 +265,7 @@ end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 [Fr1, ERBrate1]  = EqualFreqScale('ERB',GCparam.NumCh,GCparam.FRange);
-GCparam.Fr1    = Fr1(:);   % ˆÈ~‚Ì•ªÍ‚Å•p”É‚É•K—v‚É‚È‚é‚Ì‚ÅAGCparam.Fr1‚¾‚¯‚Í‚±‚±‚Å‚àset. ‚±‚Ì’l‚ÍˆêˆÓ‚ÉŒˆ‚Ü‚é‚Ì‚ÅGCparam‚Å‚àOKB
+GCparam.Fr1    = Fr1(:);   % ä»¥é™ã®åˆ†æã§é »ç¹ã«å¿…è¦ã«ãªã‚‹ã®ã§ã€GCparam.Fr1ã ã‘ã¯ã“ã“ã§ã‚‚set. ã“ã®å€¤ã¯ä¸€æ„ã«æ±ºã¾ã‚‹ã®ã§GCparamã§ã‚‚OKã€‚
 GCresp.Fr1       = Fr1(:);
 GCresp.ERBspace1 = mean(diff(ERBrate1));
 [ERBrate ERBw]   = Freq2ERB(GCresp.Fr1);
@@ -288,9 +288,9 @@ GCresp.frat1val = GCparam.frat(2,1)*OneVec + GCparam.frat(2,2)*GCresp.Ef;
 GCresp.PcHPAF = ( 1 - GCresp.frat0val)./GCresp.frat1val;    % center level for HPAF
 GCresp.frat0Pc = GCresp.frat0val + GCresp.frat1val.*GCresp.PcHPAF;
 % See testHPAF_Ctrl_Cmprs
-% Pc = (1 - GCparam.frat(1,1))/GCparam.frat(2,1);  % center of HPAF   ‚¾‚¢‚½‚¢50dB
+% Pc = (1 - GCparam.frat(1,1))/GCparam.frat(2,1);  % center of HPAF   ã ã„ãŸã„50dB
 % frat0Pc = GCparam.frat(1,1) + GCparam.frat(2,1)*Pc;
-% frat = frat0Pc + CompressionHealth*GCparam.frat1val*(PsdB-Pc);  %’†S‚©‚ç‚ÌŒW”•Ï‰»
+% frat = frat0Pc + CompressionHealth*GCparam.frat1val*(PsdB-Pc);  %ä¸­å¿ƒã‹ã‚‰ã®ä¿‚æ•°å¤‰åŒ–
 
 
 %% %%%%%%%%%%%%%%%%%%%%%%%
