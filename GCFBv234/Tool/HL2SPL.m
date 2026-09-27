@@ -5,10 +5,11 @@
 %   Modified:  9 Feb 2012
 %   Modified: 29 Feb 2012
 %   Modified:  7 Jan 2014 (clarify the reference to AA-79)
-%   Modified: 21 Feb 2018 下位互換性のため残す。情報はTableSPLatHL0dBに
-%   Modified: 23 Feb 2018 Table はSPLatHL0dB_Tableから
-%   Modified: 23 Feb 2018 Table はSPLatHL0dB_Tableから
-%   Modified: 18 Jul 2020  adding "<= 8000"
+%   Modified: 21 Feb 2018 for lower compativility see TableSPLatHL0dB
+%   Modified: 23 Feb 2018 Table from SPLatHL0dB_Table
+%   Modified: 23 Feb 2018 Table from SPLatHL0dB_Table
+%   Modified: 18 Jul 2020 adding "<= 8000"
+%   Modified: 27 Sep 2026 modified comments
 %
 % function  [SPLdB] = HL2SPL(freq,HLdB)
 % INPUT:  freq 
@@ -17,7 +18,7 @@
 %
 function  [SPLdB] = HL2SPL(freq,HLdB)
 
-Table1 = SPLatHL0dB_Table; % 数値をいろいろなプログラム中に書き込まないように。
+Table1 = SPLatHL0dB_Table; %
 FreqRef  = Table1.freq;
 SPLdBatHL0dB = Table1.SPLatHL0dB; % SPLdBatHL0dB_ANSI_S39_1996
 
