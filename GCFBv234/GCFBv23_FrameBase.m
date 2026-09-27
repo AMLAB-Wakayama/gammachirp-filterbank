@@ -40,7 +40,7 @@ ExpDecayFrame = GCparam.LvlEst.ExpDecayVal.^(GCparam.DynHPAF.LenShift);
 disp('--- Frame base processing ---');
 Tstart = clock;
 
-NfrqRsl = 1024*2;  % normalization—p‚Éü”g”“Á«‚ğZo‚µ‚Ä‚¨‚­
+NfrqRsl = 1024*2;  % normalizationç”¨ã«å‘¨æ³¢æ•°ç‰¹æ€§ã‚’ç®—å‡ºã—ã¦ãŠã
 c2val_CmprsHlth = GCparam.HLoss.FB_CompressionHealth.* GCparam.LvlEst.c2;
 scGCresp = CmprsGCFrsp(GCparam.Fr1,GCparam.fs,GCparam.n,GCresp.b1val,GCresp.c1val, ...
                                         GCparam.LvlEst.frat,GCparam.LvlEst.b2,c2val_CmprsHlth,NfrqRsl);
@@ -91,7 +91,7 @@ for nch = 1:NumCh
         + (1 - GCparam.LvlEst.Weight) * ...
         GCparam.LvlEst.LvlLinRef*(LvlLin2Frame/GCparam.LvlEst.LvlLinRef).^GCparam.LvlEst.Pwr(2);
     
-    % level monitored 4 Sep 2021@@--- “Á‚É•Ï‚Å‚Í‚È‚©‚Á‚½B
+    % level monitored 4 Sep 2021ã€€ã€€--- ç‰¹ã«å¤‰ã§ã¯ãªã‹ã£ãŸã€‚
 
     CmpnstHalfWaveRectify = -3;      % Cmpensation of  a halfwave rectification which was used in "sample-by-sample."
     LvldBframe(nch,1:LenFrame) = 20*log10( max(LvlLinTtlFrame,GCparam.LvlEst.LvlLinMinLim) ) ...
@@ -102,10 +102,10 @@ for nch = 1:NumCh
     AsymFuncGain(nch,1:LenFrame)  = 10.^((AFoutdB)/20);  % default
          
     scGCframe1 = scGCresp.NormFctFp2(nch) * scGCframe(nch,:); 
-    % normalization:  scGCframe‚Ìpeak‚ªü”g”‚ÉŠÖ‚í‚ç‚¸0dB‚Æ‚È‚é‚æ‚¤‚É 5 Sep 21
-    % ü”g”‰“š‚ÅAFp2‚ªmax‚Æ‚È‚éi‚»‚Ì‚æ‚¤‚Èü”g”‚ğFp2)B‚»‚Ìpeak‚ğˆê’è‚É‚·‚éBFr1‚ÆˆÙ‚È‚é‚ªA‹ß‚¢‚Ì‚Å‚æ‚µ‚Æ‚·‚éB
-    % GammaChirp.m‚Ì‚â‚è•û‚ğ“¥P@26 Aug 21
-    %  plot(20*log10(scGCresp.NormFctFp2)) --  -3 dB ~ + 1 dB@‚½‚¢‚µ‚½•â³—Ê‚Å‚Í‚È‚¢B
+    % normalization:  scGCframeã®peakãŒå‘¨æ³¢æ•°ã«é–¢ã‚ã‚‰ãš0dBã¨ãªã‚‹ã‚ˆã†ã« 5 Sep 21
+    % å‘¨æ³¢æ•°å¿œç­”ã§ã€Fp2ãŒmaxã¨ãªã‚‹ï¼ˆãã®ã‚ˆã†ãªå‘¨æ³¢æ•°ã‚’Fp2)ã€‚ãã®peakã‚’ä¸€å®šã«ã™ã‚‹ã€‚Fr1ã¨ç•°ãªã‚‹ãŒã€è¿‘ã„ã®ã§ã‚ˆã—ã¨ã™ã‚‹ã€‚
+    % GammaChirp.mã®ã‚„ã‚Šæ–¹ã‚’è¸è¥²ã€€26 Aug 21
+    %  plot(20*log10(scGCresp.NormFctFp2)) --  -3 dB ~ + 1 dBã€€ãŸã„ã—ãŸè£œæ­£é‡ã§ã¯ãªã„ã€‚
     
     dcGCframe(nch,1:LenFrame) = AsymFuncGain(nch,:) .*scGCframe1;
     
@@ -114,7 +114,7 @@ for nch = 1:NumCh
             '.    elapsed time = ' num2str(fix(etime(clock,Tstart)*10)/10) ' (sec)']);
         
        %% DEBUG_MODE
-       % Level estimation‚ÉŠÖ‚µ‚Ä‚Í–â‘è‚È‚µB[[@Šm”F@28 Aug 2021
+       % Level estimationã«é–¢ã—ã¦ã¯å•é¡Œãªã—ã€‚ãƒ¼ãƒ¼ã€€ç¢ºèªã€€28 Aug 2021
        % [nch mean(LvldBframe(nch,:)), max(LvldBframe(nch,:))]
        % plot( LvldBframe(nch,:) )
        %
@@ -122,8 +122,8 @@ for nch = 1:NumCh
     
 end
 
-% Data ˆø‚«“n‚µ—p
-GCresp.LvldBframe = LvldBframe; % Levelî•ñ‚Í‚±‚±‚É“ü‚Á‚Ä‚¢‚éB
+% Data å¼•ãæ¸¡ã—ç”¨
+GCresp.LvldBframe = LvldBframe; % Levelæƒ…å ±ã¯ã“ã“ã«å…¥ã£ã¦ã„ã‚‹ã€‚
 GCresp.pGCframe   = pGCframe;   % pGCframe
 GCresp.scGCframe  = scGCframe;  % scGCframe
 GCresp.fratFrame   = fratFrame;

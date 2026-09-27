@@ -18,11 +18,11 @@ end;
 %% %%%%%%%%%
 % Parameter setting
 %%%%%%%%%%%
-% GCparam.HLoss.FaudgramList ‚Æ“¯‚¶’·‚³‚Ìƒpƒ‰ƒ[ƒ^‚ª•K—v
-% 1‚Â‚Ì’liscalarj‚È‚çAvector‚É•ÏŠ·
+% GCparam.HLoss.FaudgramList ã¨åŒã˜é•·ã•ã®ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ãŒå¿…è¦
+% 1ã¤ã®å€¤ï¼ˆscalarï¼‰ãªã‚‰ã€vectorã«å¤‰æ›
 %
 LenFag = length(GCparam.HLoss.FaudgramList);
-EMparam.fs = GCparam.DynHPAF.fs;  % frame-base‚Ìo—Ísampling-rate
+EMparam.fs = GCparam.DynHPAF.fs;  % frame-baseã®å‡ºåŠ›sampling-rate
 
 if isfield(EMparam,'ReducedB') == 0  % default
     EMparam.ReducedB = zeros(1,LenFag);
@@ -43,12 +43,12 @@ elseif length(EMparam.Fcutoff) ~= LenFag
 end
 
 %%%%%%
-% FB •ª‚É
+% FB åˆ†ã«
 %%%%%%%
 % interporation to GCresp.Fr1 (which is closer to Fp2)
 [ERBrateFag] = Freq2ERB(GCparam.HLoss.FaudgramList);
-[ERBrateFr1] = Freq2ERB(GCparam.Fr1); % GC channel•ª
-EMparam.FB_Fr1            = GCparam.Fr1; % GCFBv230_SetParam‚Å‘ã“ü‚³‚ê‚Ä‚¢‚é
+[ERBrateFr1] = Freq2ERB(GCparam.Fr1); % GC channelåˆ†
+EMparam.FB_Fr1            = GCparam.Fr1; % GCFBv230_SetParamã§ä»£å…¥ã•ã‚Œã¦ã„ã‚‹
 EMparam.FB_ReducedB = interp1(ERBrateFag,EMparam.ReducedB, ERBrateFr1,'linear','extrap');
 EMparam.FB_Fcutoff     = interp1(ERBrateFag,EMparam.Fcutoff, ERBrateFr1,'linear','extrap');
 
@@ -56,8 +56,8 @@ EMparam.FB_Fcutoff     = interp1(ERBrateFag,EMparam.Fcutoff, ERBrateFr1,'linear'
 % Main: filtering
 %%%%%%%%%%%%%%%%%%%%%%%%%
 EMframe  = zeros(size(cGCframe));
-EMparam.orderLPF = 1;  %   TMTF is a first-order low-pass filter.@  ‚±‚êˆÈŠO‚ÍAó‚¯•t‚¯‚È‚¢B
-EMparam.SampleDelay = 1;  % 1st order‚Ì  Sample delay‚Í1.  see testTMTFlpf.m
+EMparam.orderLPF = 1;  %   TMTF is a first-order low-pass filter.ã€€  ã“ã‚Œä»¥å¤–ã¯ã€å—ã‘ä»˜ã‘ãªã„ã€‚
+EMparam.SampleDelay = 1;  % 1st orderã®æ™‚  Sample delayã¯1.  see testTMTFlpf.m
 
 EMparam.fcSepFilt      = 1;  % DC vs High freq :Separation filter
 EMparam.orderSepFilt = 2;
@@ -82,12 +82,12 @@ for nch = 1:GCparam.NumCh
     NormFcutoff = EMparam.FB_Fcutoff(nch)/(EMparam.fs/2);
     [bz, ap] = butter(EMparam.orderLPF,NormFcutoff);
     EnvSepHP2 = filter(bz, ap, EnvSepHP);
-    EnvSepHP2 = 10^(-EMparam.FB_ReducedB(nch)/20)*EnvSepHP2;  % filter gain‚ğreducedB•ª‚¾‚¯‰º‚°‚é
+    EnvSepHP2 = 10^(-EMparam.FB_ReducedB(nch)/20)*EnvSepHP2;  % filter gainã‚’reducedBåˆ†ã ã‘ä¸‹ã’ã‚‹
     
-    EnvRdct = EnvSepHP2 + EnvSepLP; % ‚ ‚í‚¹‚é
+    EnvRdct = EnvSepHP2 + EnvSepLP; % ã‚ã‚ã›ã‚‹
     
     % compensation of filter delay
-    NumCmpnst = EMparam.SampleDelay;  % Sample delay‚Å•â³
+    NumCmpnst = EMparam.SampleDelay;  % Sample delayã§è£œæ­£
     EMframe(nch,:) = [ EnvRdct((NumCmpnst+1):end), zeros(1,NumCmpnst)];
     
 end

@@ -126,15 +126,15 @@ end
 TransFunc.TypeField2EarDrum  = char(TypeField2EarDrumList(SwCrct));
 
 % StrInterp1 = 'spline';
-StrInterp1 = 'linear'; % linear‚Ì•û‚ª‘f’¼‚¾‚Æv‚¤B@26 Oct 21
+StrInterp1 = 'linear'; % linearã®æ–¹ãŒç´ ç›´ã ã¨æ€ã†ã€‚ã€€26 Oct 21
 
 if SwCrct <= 3
     [FreqTbl, FrspdBTbl] =  TransFuncField2EarDrum_Set(TransFunc.TypeField2EarDrum);
     if ParamIn.fs/2 > max(FreqTbl)
         FreqTbl    = [FreqTbl;     ParamIn.fs/2];
-        FrspdBTbl = [FrspdBTbl;  FrspdBTbl(end)]; %  fs/2‚Å‚ÍÅŒã‚Æ“¯‚¶’l‚ğ“ü‚ê‚Ä‚¨‚­
+        FrspdBTbl = [FrspdBTbl;  FrspdBTbl(end)]; %  fs/2ã§ã¯æœ€å¾Œã¨åŒã˜å€¤ã‚’å…¥ã‚Œã¦ãŠã
     end
-    % log‚¾‚Æfreq=0‚ğˆµ‚¦‚È‚¢B‚Å‚à’®Šo“Á«‚É‡‚í‚¹‚½‚¢‚Ì‚ÅFreq2ERB
+    % logã ã¨freq=0ã‚’æ‰±ãˆãªã„ã€‚ã§ã‚‚è´è¦šç‰¹æ€§ã«åˆã‚ã›ãŸã„ã®ã§Freq2ERB
     Field2EarDrumdB = interp1(Freq2ERB(FreqTbl),FrspdBTbl,Freq2ERB(freq),StrInterp1,'extrap'); 
 
 elseif SwCrct == 4  % NO Field2EarDrumdB 
@@ -293,22 +293,22 @@ return
 % end
 
 
-%%% Transfer function‚ÍŠO•”ŠÖ”‰»@16 Jul 2020
+%%% Transfer functionã¯å¤–éƒ¨é–¢æ•°åŒ–ã€€16 Jul 2020
 
 %[SwCrct SwCrctPrevious]
 
-% if 1 % SwCrct ~= SwCrctPrevious, %‚à‚µA‘OğŒ‚ÆˆÙ‚È‚Á‚½‚çÀs audioread‚ÌŠÔ‚ª’·‚¢‚Ì‚Åß–ñ
-% ŠÔˆá‚¢‚ÌŒ³‚È‚Ì‚ÅA‚â‚ß‚½B --> û‘©ŒvZ’†‚Å—p‚¢‚È‚¢‚æ‚¤‚ÉB@@14 Nov. 16
+% if 1 % SwCrct ~= SwCrctPrevious, %ã‚‚ã—ã€å‰æ¡ä»¶ã¨ç•°ãªã£ãŸã‚‰å®Ÿè¡Œ audioreadã®æ™‚é–“ãŒé•·ã„ã®ã§ç¯€ç´„
+% é–“é•ã„ã®å…ƒãªã®ã§ã€ã‚„ã‚ãŸã€‚ --> åæŸè¨ˆç®—ä¸­ã§ç”¨ã„ãªã„ã‚ˆã†ã«ã€‚ã€€ã€€14 Nov. 16
 %
 %disp(['=== Setting "Field2EarDrumdB" as ' TransFunc.TypeField2EarDrum]);
 
 
-% persistent Field2EarDrumdB SwCrctPrevious   ŠÔˆá‚¢‚ÌŒ³‚È‚Ì‚ÅA–ˆ‰ñŒvZ‚·‚é‚æ‚¤‚É 14 Nov 16
+% persistent Field2EarDrumdB SwCrctPrevious   é–“é•ã„ã®å…ƒãªã®ã§ã€æ¯å›è¨ˆç®—ã™ã‚‹ã‚ˆã†ã« 14 Nov 16
 % avoid reading impulse response repeatedly
 %if isempty(Field2EarDrumdB) == 1, Field2EarDrumdB = []; end;
 %if isempty(SwCrctPrevious)  == 1, SwCrctPrevious = 0; end;
 %end; % SwCrct ~= SwCrctPrevious
-%SwCrctPrevious = SwCrct; % ‘OğŒ‚Ì•Û‘¶BPrevious condition
+%SwCrctPrevious = SwCrct; % å‰æ¡ä»¶ã®ä¿å­˜ã€‚Previous condition
 
 
 

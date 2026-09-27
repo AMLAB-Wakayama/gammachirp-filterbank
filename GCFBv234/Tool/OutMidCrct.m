@@ -35,9 +35,9 @@
 %                            (defined By Glassberg and Moore.)
 %
 %
-%    Note: V‚µ‚¢ŠÖ”TransFuncField2Cochlea.m ‚ª Dec 16‚É‚Å‚«‚½B
+%    Note: æ–°ã—ã„é–¢æ•°TransFuncField2Cochlea.m ãŒ Dec 16ã«ã§ããŸã€‚
 %               help TransFuncField2Cochlea
-%             ‚±‚ê‚É‚ÍAˆÈ‰º‚Ìoption‚à‚ ‚èAMidEar ‚ÌMooreƒf[ƒ^‚Íupdate‚³‚ê‚Ä‚¢‚éB
+%             ã“ã‚Œã«ã¯ã€ä»¥ä¸‹ã®optionã‚‚ã‚ã‚Šã€MidEar ã®Mooreãƒ‡ãƒ¼ã‚¿ã¯updateã•ã‚Œã¦ã„ã‚‹ã€‚
 %           TypeField2EarDrumList = {'FreeField2EarDrum_Moore16'; ...
 %           'DiffuseField2EarDrum_Moore16'; ...
 %           'HD580_L_AMLAB15';'HD580_R_AMLAB15'; ...
@@ -45,9 +45,9 @@
 %           };%
 %
 %  Note 24 Jul 2021
-%   2017‚Ü‚Å‚Ìversion‚Å‚ÍAspline‚Å•âŠ®‚µ‚Ä‚¢‚½B‚µ‚©‚µASplineŠÖ”‚Í•K‚¸‚µ‚à‚æ‚­‚È‚¢B‚Ü‚½AMAP‚Å125HzˆÈ‰º‚Ì“Á«‚ª‚Í‚¸‚ê‚·‚¬B
-%   ‚à‚Á‚Æ‚àŠÈ’P‚Élog10(freq)‚Ìã‚ÅALinear‚Å•âŠ®B‚±‚Ì•û‚ª‘f’¼‚¾‚Æv‚í‚ê‚éB100HzˆÈã‚Å‚Í‚Ù‚Æ‚ñ‚Ç‰e‹¿‚ª‚È‚¢B]—ˆ‚©‚ç‚Ìcompativility‚Ì‚½‚ßA
-%   SwInterp‚ğ‚¢‚ê‚Ä§Œä‚·‚éB
+%   2017ã¾ã§ã®versionã§ã¯ã€splineã§è£œå®Œã—ã¦ã„ãŸã€‚ã—ã‹ã—ã€Splineé–¢æ•°ã¯å¿…ãšã—ã‚‚ã‚ˆããªã„ã€‚ã¾ãŸã€MAPã§125Hzä»¥ä¸‹ã®ç‰¹æ€§ãŒã¯ãšã‚Œã™ãã€‚
+%   ã‚‚ã£ã¨ã‚‚ç°¡å˜ã«log10(freq)ã®ä¸Šã§ã€Linearã§è£œå®Œã€‚ã“ã®æ–¹ãŒç´ ç›´ã ã¨æ€ã‚ã‚Œã‚‹ã€‚100Hzä»¥ä¸Šã§ã¯ã»ã¨ã‚“ã©å½±éŸ¿ãŒãªã„ã€‚å¾“æ¥ã‹ã‚‰ã®compativilityã®ãŸã‚ã€
+%   SwInterpã‚’ã„ã‚Œã¦åˆ¶å¾¡ã™ã‚‹ã€‚
 % 
 %
 function [CrctLinPwr, freq, FreqChardB_toBeCmpnstd] = OutMidCrct(StrCrct,NfrqRsl,fs,SwPlot, SwInterp);
@@ -59,7 +59,7 @@ if length(NfrqRsl) == 0
 end
 if nargin < 3, fs = []; end 
 if length(fs) == 0
-    fs = 32000;    % ‚È‚º‚©A‚±‚¤‚È‚Á‚Ä‚¢‚½.@‚»‚Ì‚Ü‚ÜBÀŠQ‚È‚µB 24 Jul 21
+    fs = 32000;    % ãªãœã‹ã€ã“ã†ãªã£ã¦ã„ãŸ.ã€€ãã®ã¾ã¾ã€‚å®Ÿå®³ãªã—ã€‚ 24 Jul 21
 end
 if nargin < 4, SwPlot = []; end 
 if length(SwPlot) == 0

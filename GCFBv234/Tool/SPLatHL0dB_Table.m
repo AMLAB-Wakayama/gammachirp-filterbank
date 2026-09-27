@@ -3,36 +3,36 @@
 %   Irino T.,
 %   Created:  21 Feb 2018  ( ANSI S3.6-1996 standard)
 %   Modified:  21 Feb 2018  ( ANSI S3.6-1996 standard)
-%   Modified:  23 Feb 2018  Table ��Ɨ��̃t�@�C���Ƃ���
-%   Modified:  24 May 2018  ANSI S3.6-2010 standard�̒l�𓱓��B���Ԃ̎��g���̒l���V���ɒǉ�����Ă���B
-%   Modified:    6 Jun  2018  ���Ⴂ���C���BNote�ɋL�q
+%   Modified:  23 Feb 2018  Table を独立のファイルとして
+%   Modified:  24 May 2018  ANSI S3.6-2010 standardの値を導入。中間の周波数の値が新たに追加されている。
+%   Modified:    6 Jun  2018  勘違いを修正。Noteに記述
 %
 % function   [Table] = TableSPLatHL0dB(SwYear)
 % INPUT:  SwYear
-% OUTPUT:   Table.freq : ���g��
+% OUTPUT:   Table.freq : 周波数
 %                   Table.SPLatHL0dB : SPL dB
 % ------------------------------------------------------------
 % Information:
 % ------------------------------------------------------------
 %
 %  Note: 21 Feb 2018
-% ANSI_S3.6-1996�̏��
+% ANSI_S3.6-1996の情報
 % http://hearinglosshelp.com/blog/understanding-the-difference-between-sound-pressure-level-spl-and-hearing-level-hl-in-measuring-hearing-loss/
-% ANSI_S3.6-2004�̏��
+% ANSI_S3.6-2004の情報
 % https://www.researchgate.net/publication/284004608_Audiometric_calibration_Air_conduction
-% ANSI_S3.6-2010�̏��F�@2018/5/24. document����BASA�����5�{�܂�standard�𖳗������
+% ANSI_S3.6-2010の情報：　2018/5/24. document入手。ASA会員は5本までstandardを無料入手可
 %
 % Note: 6 May 2018
-%       1996���I�[�W�I���[�^����ȊO�̒��Ԃ̎��g������B
-%       ���l���A�C���z����TDH Type IEC318 �̏ꍇ�A2010�� �S������
-%       SwYear�ŕ�����̂͂ӂ��킵���Ȃ��B--> ����
+%       1996もオージオメータ測定以外の中間の周波数あり。
+%       数値も、イヤホンがTDH Type IEC318 の場合、2010と 全く同じ
+%       SwYearで分けるのはふさわしくない。--> 消去
 %        SPLatHL0dB_Table(SwYear) --> SPLatHL0dB_Table
 %
 %
 function  [Table] = SPLatHL0dB_Table
 
-%  ANSI_S3.6-2010 (1996)�̒��Ԃ̎��g�����܂�Table
-    %���g������������̂ŁA��΂��L��
+%  ANSI_S3.6-2010 (1996)の中間の周波数も含むTable
+    %周波数が多すぎるので、一対ずつ記載
     Freq_SPLdBatHL0dB_List = ...
         [125, 45.0; 160, 38.5; 200, 32.5; ...
         250, 27.0; 315, 22.0; 400, 17.0; ...
@@ -48,25 +48,25 @@ function  [Table] = SPLatHL0dB_Table
     Table.Speech = 20.0;
     Table.Standard = 'ANSI-S3.6_2010';
     Table.Earphone = 'Any supra aural earphone having the characteristics described in clause 9.1.1 or ISO 389-1'; 
-            %�C���z���BANSI-S3.6_2010�̋K�i����p.26 Table 5 �̒���a�ɋL�q����Ă���Ƃ���B
-    Table.AirficialEar = 'IEC 60318-1';  % �l�H���B����ő��肵�āA�Z���������B
+            %イヤホン。ANSI-S3.6_2010の規格書のp.26 Table 5 の注釈aに記述されているとおり。
+    Table.AirficialEar = 'IEC 60318-1';  % 人工耳。これで測定して、校正もされる。
 
     
-% �Q�l 21 Feb 2018�ɏ����������B
-% �I�[�W�I���[�^�̑�����g�������Ɋւ��Ă�Table
+% 参考 21 Feb 2018に書いた部分。
+% オージオメータの測定周波数だけに関してのTable
     %Freq_ANSI_S36_1996_Augiogram     = [125  250  500  750 1000 1500 2000 3000 4000 6000 8000];
     %SPLdBatHL0dB_ANSI_S36_1996_Augiogram     = [45.0 27.0 13.5 9.0 7.5  7.5  9.0  11.5 12.0 16.0 15.5];
-                                                    % ANSI_S36_1996�́ARion AA79, AA74�ō̗p����Ă�����̂Ɠ���
-    % Table.freq_Audiogram = Freq_ANSI_S36_1996_Augiogram; �s�v
-    % Table.SPLatHL0dB_Audiogram = SPLdBatHL0dB_ANSI_S36_1996_Augiogram; �s�v
-    % �I�[�W�I���[�^�̎��g���̂݃s�b�N�A�b�v�@�F�@�Ӗ��Ȃ��C������̂ł�߂�B�O�ōs���Ηǂ��B    
+                                                    % ANSI_S36_1996は、Rion AA79, AA74で採用されているものと同じ
+    % Table.freq_Audiogram = Freq_ANSI_S36_1996_Augiogram; 不要
+    % Table.SPLatHL0dB_Audiogram = SPLdBatHL0dB_ANSI_S36_1996_Augiogram; 不要
+    % オージオメータの周波数のみピックアップ　：　意味ない気がするのでやめる。外で行えば良い。    
     
 return;
 
 %% %%%%%%%%%%%%%%%%%%%%%%%%%
 
 % ------------------------------------------------------------
-% Information:���܂܂ł̌o��
+% Information:いままでの経緯
 % ------------------------------------------------------------
 %
 % Note:
@@ -74,28 +74,28 @@ return;
 % http://www.rion.co.jp/dbcon/pdf/AA-79.pdf
 %
 % http://www20.big.or.jp/~ent/kikoe/db_hz.htm
-%�E�I�[�W�I���[�^�ł̏������͌����łO���a�͂i�h�r�K�i�ɂ��A�W���J�b�v���[�i�m�a�r�X�`�J�b�v���[�j���ŕ\�̉����ɂȂ�悤�ɒ�߂��Ă���B
+%・オージオメータでの純音聴力検査で０ｄＢはＪＩＳ規格により、標準カップラー（ＮＢＳ９Ａカップラー）内で表の音圧になるように定められている。
 %
-% ���̉����͏��p����Ă��鍑�Y��b��ɂ���Ă��ꂼ���߂��Ă���A�\�́i�@�j���̒l�͂`�c?�O�Q�̏ꍇ�ł��B
-% �������ŏ��̉����A�ŏ���臒l�����̕\�ł���Ƃ��A���̓��x�����O���a�ł���Ƃ����܂��B
-% ������傫�Ȓl�̎��́A��ƂȂ鉺�\�̒l�Ƃ̍��ɏ]���A���̓��x���v���X�����a�i�g�k�j�ƌ����܂��B
+% この音圧は商用されている国産受話器によってそれぞれ定められており、表の（　）内の値はＡＤ?０２の場合です。
+% 聞き取る最小の音圧、最小可聴閾値が下の表であるとき、聴力レベルが０ｄＢであるといいます。
+% これより大きな値の時は、基準となる下表の値との差に従い、聴力レベルプラス何ｄＢ（ＨＬ）と言います。
 %
-% �I�[�W�I���[�^�̏o�̓��x���ڐ��肪�O���a�̎��̌������̋����͕\�̂Ƃ���ł��B
+% オージオメータの出力レベル目盛りが０ｄＢの時の検査音の強さは表のとおりです。
 %
-% ���g�� �g��	125	250	500	1000	1500	2000	3000	4000	6000	8000
-% �����@���a��	45.5	24.5	11.0	6.5	6.5	8.5	7.5	9.0	8.0	9.5
-% 0dB��20��Pa	(47.5)	(27.0)	(13.0)	(7.0)	(6.5)	(7.0)	(8.0)	(9.5)	(12.0)	(16.5)
+% 周波数 Ｈｚ	125	250	500	1000	1500	2000	3000	4000	6000	8000
+% 音圧　ｄＢ＊	45.5	24.5	11.0	6.5	6.5	8.5	7.5	9.0	8.0	9.5
+% 0dB＝20μPa	(47.5)	(27.0)	(13.0)	(7.0)	(6.5)	(7.0)	(8.0)	(9.5)	(12.0)	(16.5)
 %
-%�E�X�s�[�J���̉���ł̉����r�o�k�����a�g�k�Ɋ��Z����ꍇ�̌v�Z
-% �Q�T�O�g���͂��a�r�o�k�͂��a�g�k�ɂP�S�A�T�O�O�g���͂X�A�P�O�O�O�g���͂V�A�Q�O�O �O�g���͂S�A�S�O�O�O�g����?�P�𑫂��܂��Ƃ��a�g�k�����a�r�o�k�Ɋ��Z�ł��܂��B
+%・スピーカ等の音場での音圧ＳＰＬをｄＢＨＬに換算する場合の計算
+% ２５０ＨｚはｄＢＳＰＬはｄＢＨＬに１４、５００Ｈｚは９、１０００Ｈｚは７、２００ ０Ｈｚは４、４０００Ｈｚは?１を足しますとｄＢＨＬがｄＢＳＰＬに換算できます。
 %
 % SPLdBatHL0dB_Kikoe  = [45.5 24.5 11.0 NaN 6.5  6.5  8.5  7.5  9.0   8.0  9.5];
 % SPLdBatHL0dB_AD02   = [47.5 27.0 13.0 NaN 7.0  6.5  7.0  8.0  9.5  12.0 16.5];
 %
 % SPLdBatHL0dB_AA79   = [45.0 27.0 13.5 9.0 7.5  7.5  9.0  11.5 12.0 16.0 15.5];
-%      ���C��:0dB = 20��Pa(IEC 60318-1�l�H���ɂ��)
+%      ※気導:0dB = 20μPa(IEC 60318-1人工耳による)
 %
-% ����
+% 日医
 % http://www.nihon-iryouki.jp/index.php?main_page=page&id=13&chapter=0
 % SPLdBatHL0dB_NichiI = [NaN  NaN  13.5 NaN 7.5  NaN  9.0  11.5 12  16   NaN]; % NichiI
 %
@@ -103,19 +103,19 @@ return;
 % 
 % ------------------------------------------------------------
 %
-%  Memo:  AA79��reference�Ƃ��ėp���邱�Ƃɂ��Ă��܂��B29 Feb 2012�@
-%         SPLdBatHL0dB_AA79�Ƃ����ϐ����������������ߒǉ��B�i�l�͕ω������j�@7 Jan 2014
+%  Memo:  AA79をreferenceとして用いることにしています。29 Feb 2012　
+%         SPLdBatHL0dB_AA79という変数名が無かったため追加。（値は変化無し）　7 Jan 2014
 %
 % ------------------------------------------------------------
 %
 %  Note: 21 Feb 2018
-% ANSI_S3.9-1996�̏��
+% ANSI_S3.9-1996の情報
 % http://hearinglosshelp.com/blog/understanding-the-difference-between-sound-pressure-level-spl-and-hearing-level-hl-in-measuring-hearing-loss/
 %
 %
 %FreqRef               = [125  250  500  750 1000 1500 2000 3000 4000 6000 8000];
 %SPLdBatHL0dB_ANSI_S39_1996     = [45.0 27.0 13.5 9.0 7.5  7.5  9.0  11.5 12.0 16.0 15.5];
-% ����́ASPLdBatHL0dB_AA79�ō̗p����Ă�����̂Ɠ���
+% これは、SPLdBatHL0dB_AA79で採用されているものと同じ
 % SPLdBatHL0dB_AD02B  = [45.0 27.0 13.5 9.0 7.5  7.5  9.0  11.5 12.0 16.0 15.5]; % Rion AA-79
 % SPLdBatHL0dB_Kikoe  = [45.5 24.5 11.0 NaN 6.5  6.5  8.5  7.5  9.0   8.0  9.5];
 % SPLdBatHL0dB_AD02   = [47.5 27.0 13.0 NaN 7.0  6.5  7.0  8.0  9.5  12.0 16.5];

@@ -7,7 +7,7 @@
 %       Modified:   6  Mar 2022  v232  rename of GCFBv231_func -->  GCFBv23_func 
 %
 % Note:
-%       GCFB‚ªELC•â³‚ğ‚µ‚Ä•ªÍ‚µ‚Ä‚¢‚éê‡A‚»‚ê‚ğ‹t•â³‚·‚é•K—v‚ ‚èB
+%       GCFBãŒELCè£œæ­£ã‚’ã—ã¦åˆ†æã—ã¦ã„ã‚‹å ´åˆã€ãã‚Œã‚’é€†è£œæ­£ã™ã‚‹å¿…è¦ã‚ã‚Šã€‚
 %
 %
 function [SndSyn]  = GCFBv23_SynthSnd(GCsmpl,GCparam)
@@ -16,20 +16,20 @@ disp('*** Synthesis from GCFB 2D-sample ***');
 fs = GCparam.fs;
 % Inverse compensation of ELC
 if strcmp(upper(GCparam.OutMidCrct),'NO') ~= 1
-    % ELC“™‚Ì‹tƒtƒBƒ‹ƒ^Bü”g”“Á«‚ª‚±‚¿‚ç‚Ì•û‚ª—Ç‚¢B
-    AmpSyn = -15; % AnaSyn‚Åimpulse ‰“š‚ªˆê’v‚·‚é‚æ‚¤‚ÉŒˆ‚ß‚½B
-                             % GCFB‚Ìü”g””ÍˆÍ‚É‚æ‚Á‚Ä‰e‹¿‚Í‚È‚µB
-    Tdelay = 0.00632; % filter delay  ŠÔ’x‚ê‚Ì•â³B ‚½‚¾‚µAELC filter—pB
+    % ELCç­‰ã®é€†ãƒ•ã‚£ãƒ«ã‚¿ã€‚å‘¨æ³¢æ•°ç‰¹æ€§ãŒã“ã¡ã‚‰ã®æ–¹ãŒè‰¯ã„ã€‚
+    AmpSyn = -15; % AnaSynã§impulse å¿œç­”ãŒä¸€è‡´ã™ã‚‹ã‚ˆã†ã«æ±ºã‚ãŸã€‚
+                             % GCFBã®å‘¨æ³¢æ•°ç¯„å›²ã«ã‚ˆã£ã¦å½±éŸ¿ã¯ãªã—ã€‚
+    Tdelay = 0.00632; % filter delay  æ™‚é–“é…ã‚Œã®è£œæ­£ã€‚ ãŸã ã—ã€ELC filterç”¨ã€‚
     Ndelay = fix(Tdelay*fs);
      InvCmpnOutMid = MkFilterField2Cochlea(GCparam.OutMidCrct,fs,-1); % -1) backward inverse filter 26 Oct 21
     SndMean = mean(GCsmpl);
     SndSyn1 = filter(InvCmpnOutMid,1,SndMean);
-    % U•‚ÆŠÔ’x‚ê•â³
+    % æŒ¯å¹…ã¨æ™‚é–“é…ã‚Œè£œæ­£
     SndSyn = AmpSyn*[SndSyn1(Ndelay+1: end), zeros(1,Ndelay)];
 else
-    % ELC“™‚Ìd‚İ•t‚¯‚ª‚È‚¢ê‡
+    % ELCç­‰ã®é‡ã¿ä»˜ã‘ãŒãªã„å ´åˆ
     disp('No inverse OutMidCrct (FF / DF / ITU +MidEar / ELC) correction.');
-    AmpSyn = -15;  % ã‚Æ“¯‚¶’l‚ÅOK
+    AmpSyn = -15;  % ä¸Šã¨åŒã˜å€¤ã§OK
     SndSyn =  AmpSyn*mean(GCsmpl);
 end
 

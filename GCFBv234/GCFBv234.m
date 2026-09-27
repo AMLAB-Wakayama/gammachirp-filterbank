@@ -41,14 +41,14 @@
 %       Modified:    5 Dec 2018  (v211,  Just modify the version number without any software modification in the main. )
 %       Modified:    6 May 2020  (for checking processing speed, tic/toc comments)
 %       Modified:  16 May 2020  (v220, introduction of frame-base processing)
-%       Modified:  22 May 2020  (v230, introduction of GC Hearing Loss@ --- See function GCFBv230_HearingLoss)
+%       Modified:  22 May 2020  (v230, introduction of GC Hearing Lossã€€ --- See function GCFBv230_HearingLoss)
 %       Modified:  24 May 2020  (v230, AbsThreshold == Output 0dB)
 %       Modified:  24 Jul  2020   (v230, IO function)
 %       Modified:  26 Jul  2020   (v230, modified)
 %       Modified:  22 Jan 2021   (v230, NormIOfunc_CmpnstTerm)
 %       Modified:  27 Feb 2021  (v230, output modified , dcGCout & scGCsmpl )
 %       Modified:  13 Aug 2021  (v230, output modified , [dcGCout, scGCsmpl, GCparam, GCresp, pGCframe, scGCframe] )
-%       Modified:  17 Aug 2021  (v230, output modified , GCresp.pGCframe, GCresp.scGCframe‚É‚µ‚½Bo—Í‚Í[dcGCout, scGCsmpl, GCparam, GCresp] )
+%       Modified:  17 Aug 2021  (v230, output modified , GCresp.pGCframe, GCresp.scGCframeã«ã—ãŸã€‚å‡ºåŠ›ã¯[dcGCout, scGCsmpl, GCparam, GCresp] )
 %       Modified:  26 Aug 2021  v231
 %       Modified:  29 Aug 2021  v231
 %       Modified:    3 Sep 2021  v231 some tests
@@ -154,7 +154,7 @@ if strncmp(GCparam.Ctrl,'sta',3) == 1
     %%% for HP-AF %%%
     LvldB = GCparam.LeveldBscGCFB;
     GCresp.LvldB  = LvldB;
-    fratVal = GCresp.frat0Pc + GCresp.frat1val.*(LvldB - GCresp.PcHPAF);  %GCresp.frat0PcF@HPAF‚Ì’†S‰¹ˆ³‚©‚ç‚ÌŒvZB
+    fratVal = GCresp.frat0Pc + GCresp.frat1val.*(LvldB - GCresp.PcHPAF);  %GCresp.frat0Pcï¼šã€€HPAFã®ä¸­å¿ƒéŸ³åœ§ã‹ã‚‰ã®è¨ˆç®—ã€‚
     Fr2val = fratVal.* GCresp.Fp1(:);
     GCresp.Fr2 = Fr2val;
     [ACFcoefFixed] = MakeAsymCmpFiltersV2(fs,Fr2val,GCresp.b2val,GCresp.c2val);
@@ -245,30 +245,30 @@ end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 [~,LenOut] = size(cGCout);
 if isnumeric(GCparam.GainRefdB) == 1  % classic model until GCFBv220
-    % v220‚Ü‚Å‚Æ“¯—l‚ÅAHLoss‚Í“ü‚ê‚È‚¢B‘O‚Æ‚ÌŒİŠ·«Šm”F^“ü‚ê‚Ä‚àAbsThresholdİ’è‚ª‚È‚¯‚ê‚Îg‚¢‚É‚­‚¢B
+    % v220ã¾ã§ã¨åŒæ§˜ã§ã€HLossã¯å…¥ã‚Œãªã„ã€‚å‰ã¨ã®äº’æ›æ€§ç¢ºèªï¼å…¥ã‚Œã¦ã‚‚AbsThresholdè¨­å®šãŒãªã‘ã‚Œã°ä½¿ã„ã«ãã„ã€‚
     fratRef = GCresp.frat0Pc + GCresp.frat1val.*(GCparam.GainRefdB - GCresp.PcHPAF);
     cGCRef = CmprsGCFrsp(GCresp.Fr1,fs,GCparam.n,GCresp.b1val,GCresp.c1val,fratRef,GCresp.b2val,GCresp.c2val);
-    GCresp.GainFactor = 10^(GCparam.GainCmpnstdB/20)*cGCRef.NormFctFp2;  % compensation‚à“ü‚éB
+    GCresp.GainFactor = 10^(GCparam.GainCmpnstdB/20)*cGCRef.NormFctFp2;  % compensationã‚‚å…¥ã‚‹ã€‚
     GCresp.cGCRef = cGCRef;
     
     dcGCout = (GCresp.GainFactor*ones(1,LenOut)).*cGCout;  % output name dcGCout
     
 elseif strcmp(GCparam.GainRefdB,'NormIOfunc') == 1  % introducing HLoss
 
-    GainFactor= 10.^(-(GCparam.HLoss.FB_AFgainCmpnstdB)/20);   % HL0dB, HL val dB‚ğˆê’v‚³‚¹‚é‚½‚ß
-    %  2021/10/7 ŠÔˆá‚¢‚Æv‚Á‚Äƒ`ƒFƒbƒNB 
+    GainFactor= 10.^(-(GCparam.HLoss.FB_AFgainCmpnstdB)/20);   % HL0dB, HL val dBã‚’ä¸€è‡´ã•ã›ã‚‹ãŸã‚
+    %  2021/10/7 é–“é•ã„ã¨æ€ã£ã¦ãƒã‚§ãƒƒã‚¯ã€‚ 
     %   GainFactor= 10.^(-GCparam.HLoss.FB_NHgainCmpnstdB/20);    
-    % NH‚ÌŒÅ’ègain‚¾‚¯‚ğ‚±‚±‚Å‚Í•â³BHL‚Ì‚Í‚±‚Ì•ûŒü‚Å‚Ì•â³‚Í‚µ‚È‚¢BHL_IHCi‰¡²•ûŒüj‚Å•â³‚·‚×‚«B2021/10/7
-    % ---> 2021/10/8A‚±‚ê‚Å‚Íƒ_ƒ‚ÅAŒ³‚ÌŒvZ‚ª³‰ğ‚Å‚ ‚é‚±‚Æ‚ª‚í‚©‚Á‚½B‚±‚êˆÈŠO‚È‚¢B
-    %  å—‹‚ªŒ’‘S‚È‚çIOfunction‚à“ü—Í‰¹ˆ³‚É‘Î‚µ“¯‚¶ˆÊ’uB‚»‚ê‚É‘Î‚µ‚ÄIHC‚ÌŒ¸Š‚ª“ü‚Á‚Äè‡’l‚ÉŠ‚éB
-    %  ’ˆÓ‚·‚×‚«“_‚ÍAˆ³k“Á«‚ª‚ ‚éê‡A HL_IHC (¨•ûŒüF“ü—Í‚ÅŒ©‚½ê‡)‚æ‚è‚àA
-    %   Loss_IHC i « •ûŒüF•ÏŠ·‘¹¸j‚Ì•û‚ª¬‚³‚­‚ÄÀŒ»‚·‚éB
+    % NHã®å›ºå®šgainã ã‘ã‚’ã“ã“ã§ã¯è£œæ­£ã€‚HLã®ã¯ã“ã®æ–¹å‘ã§ã®è£œæ­£ã¯ã—ãªã„ã€‚HL_IHCï¼ˆæ¨ªè»¸æ–¹å‘ï¼‰ã§è£œæ­£ã™ã¹ãã€‚2021/10/7
+    % ---> 2021/10/8ã€ã“ã‚Œã§ã¯ãƒ€ãƒ¡ã§ã€å…ƒã®è¨ˆç®—ãŒæ­£è§£ã§ã‚ã‚‹ã“ã¨ãŒã‚ã‹ã£ãŸã€‚ã“ã‚Œä»¥å¤–ãªã„ã€‚
+    %  è¸ç‰›ãŒå¥å…¨ãªã‚‰IOfunctionã‚‚å…¥åŠ›éŸ³åœ§ã«å¯¾ã—åŒã˜ä½ç½®ã€‚ãã‚Œã«å¯¾ã—ã¦IHCã®æ¸›è¡°ãŒå…¥ã£ã¦é–¾å€¤ã«è‡³ã‚‹ã€‚
+    %  æ³¨æ„ã™ã¹ãç‚¹ã¯ã€åœ§ç¸®ç‰¹æ€§ãŒã‚ã‚‹å ´åˆã€ HL_IHC (â†’æ–¹å‘ï¼šå…¥åŠ›ã§è¦‹ãŸå ´åˆ)ã‚ˆã‚Šã‚‚ã€
+    %   Loss_IHC ï¼ˆ â†“ æ–¹å‘ï¼šå¤‰æ›æå¤±ï¼‰ã®æ–¹ãŒå°ã•ãã¦å®Ÿç¾ã™ã‚‹ã€‚
     %
     
     dcGCout = (GainFactor*ones(1,LenOut)).*cGCout;
-    %  rms 0dB‚ÍAMeddisIHCLevel‚Å30dB SPL‚É‘Š“–   17 Aug 2021
-    %  ]—ˆ‚ÌGCFB‚â“ü—ÍM†‚Æ‚Ìcompativility‚Ì‚½‚ßA‚±‚Ì‚Ü‚Üo—ÍB
-    % ---> rms@0dB‚ÅSPL0dB‚É‚µ‚½‚¢ê‡AGCparam.MeddisIHCLevel_RMS0dB_SPLdB‚ğ—p‚¢‚Ä•â³‚·‚é‚±‚ÆB
+    %  rms 0dBã¯ã€MeddisIHCLevelã§30dB SPLã«ç›¸å½“   17 Aug 2021
+    %  å¾“æ¥ã®GCFBã‚„å…¥åŠ›ä¿¡å·ã¨ã®compativilityã®ãŸã‚ã€ã“ã®ã¾ã¾å‡ºåŠ›ã€‚
+    % ---> rmsã€€0dBã§SPL0dBã«ã—ãŸã„å ´åˆã€GCparam.MeddisIHCLevel_RMS0dB_SPLdBã‚’ç”¨ã„ã¦è£œæ­£ã™ã‚‹ã“ã¨ã€‚
     
 else
     error('Set GCparam.GainRefdB properly');
