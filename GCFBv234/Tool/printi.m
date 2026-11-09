@@ -7,7 +7,7 @@
 %			 = printi(SwSizeSet,SwPrint,SetCord),
 %	INPUT SwSizeSet :  -1) Back to initialization
 %			0) No setting
-%			1) 1 graph  in A4 paper [subplot(111)] 
+%			1) 1 graph  in A4 paper [subplot(111)]
 %                       2) 2 graphs in A4 paper [subplot(211)]
 %                       3) Paper #1 [2, 7, 18*Mag, 14.4*Mag];
 %                       4) Paper #2 [0.5, 4, 20, 19];
@@ -15,10 +15,10 @@
 %                       6) Paper #4 Landscape of #2 : [4, 0.5, 20, 19];
 %	      SwPrint:  0) Just setting (default)
 %			1) Query(GhostView/Printer) & Setting
-%	      SetCord:  if length==4 :  SetCordinate 
+%	      SetCord:  if length==4 :  SetCordinate
 %					[left bottom width hight]
-%			if length==2 :  PageMaker PS Set [ 0 0 ] 
-%			if length==1 :  Set Mag 
+%			if length==2 :  PageMaker PS Set [ 0 0 ]
+%			if length==1 :  Set Mag
 %				(valid only when SwSizeSet==3. default: 1)
 %
 function  [OrgPP, OrgUnit, ModPP, ModUnit] = printi(SwSizeSet,SwPrint,SetCord),
@@ -27,7 +27,7 @@ global OrgUnit OrigPP
 
 if nargin < 1,	help printi; return; end;
 if nargin < 2,	SwPrint = 0; end;
-if nargin == 3 
+if nargin == 3
 	if length(SetCord) == 1 & SwSizeSet < 3,
 	error('Magnitude parameter should be used as printi(3,1,Mag).')
 	end;
@@ -52,7 +52,7 @@ else
 	else
 	if 	SwSizeSet == 1,  	ModPP = [0.5,6,17*MagDef,13*MagDef];
 	elseif 	SwSizeSet == 2,		ModPP = [2,2,17,13*2];
-	elseif 	SwSizeSet == 3,	
+	elseif 	SwSizeSet == 3,
 		ModPP = [2+12/2*MagDef*(1-Mag), 7+15/2*MagDef*(1-Mag), ...
 			15*Mag*MagDef, 12*Mag*MagDef];
 	elseif 	SwSizeSet == 4,		ModPP  = [0.5, 4, 20, 19];
@@ -68,7 +68,7 @@ else
 
 	if length(SetCord) == 2, ModPP(1:2) = SetCord(1:2);  end;
 
-	ModUnit = 'centimeters'; 
+	ModUnit = 'centimeters';
 	set(gcf,'PaperUnits',ModUnit);
 	set(gcf,'PaperPosition',ModPP);
 end;
@@ -90,9 +90,9 @@ input('Print Figure to [(p)rinter / (g)hostview / (f)ile / no (Ret) ] ','s');
 if length(Prnt) < 1, Prnt = 'no'; end;
 end;
 
-ModUnit =  get(gcf,'PaperUnit');
+ModUnit =  get(gcf,'PaperUnits');
 ModPP 	=  get(gcf,'PaperPosition');
-str = [ 'PaperUnit = ' ModUnit '   ' str];
+str = [ 'PaperUnits = ' ModUnit '   ' str];
 
 if Prnt(1) == 'g',
 	disp('*** Print to Ghostview ***');
@@ -106,11 +106,11 @@ if Prnt(1) == 'g',
 	eval(str);
 	str = ['delete ' FileName];
 	eval(str);
-elseif Prnt(1) == 'p', 	
+elseif Prnt(1) == 'p',
 	disp('*** Print to Printer ***');
 	disp(str);
 	print -dps
-elseif Prnt(1) == 'f', 	
+elseif Prnt(1) == 'f',
 	disp('*** Print to File ***');
 	disp(['Current directory: ' pwd]);
 	FileName = input('File Name : ','s');
