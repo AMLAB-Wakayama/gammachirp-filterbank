@@ -1,7 +1,8 @@
 %
 %	*** Print by a default size (portrate/landscape) ***
-%	IRINO Toshio
-%	12 Mar. 97
+%	  IRINO,T
+%	　　Created: 12 Mar 1997
+%	  Modified: 17 Nov 2026 % modified for octave
 %
 %       function  [OrgPP,OrgUnit,ModPP, ModUnit]
 %			 = printi(SwSizeSet,SwPrint,SetCord),
@@ -27,9 +28,9 @@ global OrgUnit OrigPP
 
 if nargin < 1,	help printi; return; end;
 if nargin < 2,	SwPrint = 0; end;
-if nargin == 3
-	if length(SetCord) == 1 & SwSizeSet < 3,
-	error('Magnitude parameter should be used as printi(3,1,Mag).')
+if nargin == 3,
+  if length(SetCord) == 1 && SwSizeSet < 3,  % modified for octave 17 Nov 2026
+	  error('Magnitude parameter should be used as printi(3,1,Mag).')
 	end;
 end;
 
